@@ -1,0 +1,2420 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Alan Ciccarelli — Software Developer & C++ Engineer</title>
+
+  <!-- Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            paper: '#faf9f6',
+            'paper-dark': '#0b0f17',
+            card: '#ffffff',
+            'card-dark': '#111726',
+            borderLight: '#e5e5e0',
+            borderDark: '#1f293d',
+            ink: '#111111',
+            'ink-dark': '#f3f4f6',
+            muted: '#5c5c58',
+            'muted-dark': '#9ca3af',
+            accent: '#10b981',
+            accentIndigo: '#4f46e5',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom Scrollbar & Utility Animations */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: rgba(156, 163, 175, 0.4);
+      border-radius: 9999px;
+    }
+
+    /* Keyframes */
+    @keyframes fadeSlideUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes flowDash {
+      to {
+        stroke-dashoffset: -30;
+      }
+    }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        opacity: 0.4;
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 0.9;
+        transform: scale(1.08);
+      }
+    }
+
+    .animate-hero-1 {
+      animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
+      opacity: 0;
+    }
+
+    .animate-hero-2 {
+      animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.25s forwards;
+      opacity: 0;
+    }
+
+    .animate-hero-3 {
+      animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.4s forwards;
+      opacity: 0;
+    }
+
+    .animate-hero-4 {
+      animation: fadeSlideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.55s forwards;
+      opacity: 0;
+    }
+
+    .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .reveal-on-scroll.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pipeline-dash {
+      stroke-dasharray: 6 6;
+      animation: flowDash 1.2s linear infinite;
+    }
+
+    .glass-nav {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    /* Project Panel Range Slider */
+    .project-range-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      height: 6px;
+      border-radius: 9999px;
+      outline: none;
+      cursor: pointer;
+    }
+
+    .project-range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 9999px;
+      background: #10b981;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+      cursor: grab;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .dark .project-range-slider::-webkit-slider-thumb {
+      border-color: #111726;
+    }
+
+    .project-range-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+    }
+
+    .project-range-slider::-webkit-slider-thumb:active {
+      cursor: grabbing;
+      transform: scale(1.08);
+    }
+
+    .project-range-slider::-moz-range-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 9999px;
+      background: #10b981;
+      border: 2px solid #ffffff;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
+      cursor: grab;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+
+    .dark .project-range-slider::-moz-range-thumb {
+      border-color: #111726;
+    }
+
+    /* Keep page content above the fixed full-screen ambient cursor canvas */
+    section,
+    footer {
+      position: relative;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-paper dark:bg-paper-dark text-ink dark:text-ink-dark font-sans transition-colors duration-300 antialiased selection:bg-emerald-500/20 selection:text-emerald-700 dark:selection:text-emerald-300">
+
+  <!-- Full-Screen Ambient Organic Particle & Cursor Halo Canvas (Zero Interference) -->
+  <canvas id="cursor-halo-canvas" aria-hidden="true"
+    class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
+
+  <!-- Top Scroll Progress Bar -->
+  <div id="scroll-progress"
+    class="fixed top-0 left-0 h-0.5 bg-gradient-to-r from-emerald-500 via-indigo-500 to-emerald-400 z-50 w-0 transition-all duration-150">
+  </div>
+
+  <!-- Header Navigation -->
+  <header
+    class="sticky top-0 z-40 w-full glass-nav bg-paper/80 dark:bg-paper-dark/80 border-b border-borderLight dark:border-borderDark transition-colors duration-300">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+
+      <!-- Brand Logo / Name -->
+      <a href="#"
+        class="font-mono font-semibold text-sm sm:text-base tracking-tight hover:opacity-80 transition-opacity flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse"></span>
+        <span>Alan Ciccarelli</span>
+        <span class="text-xs text-muted dark:text-muted-dark font-normal hidden sm:inline">/ C++ & SDD</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav
+        class="hidden md:flex items-center space-x-6 text-xs font-mono tracking-wide text-muted dark:text-muted-dark">
+        <a href="#workflow" class="hover:text-ink dark:hover:text-ink-dark transition-colors">#workflow</a>
+        <a href="#projects" class="hover:text-ink dark:hover:text-ink-dark transition-colors">#projects</a>
+        <a href="#education" class="hover:text-ink dark:hover:text-ink-dark transition-colors">#education</a>
+        <a href="#notes" class="hover:text-ink dark:hover:text-ink-dark transition-colors">#notes</a>
+        <a href="#contact" class="hover:text-ink dark:hover:text-ink-dark transition-colors">#contact</a>
+      </nav>
+
+      <!-- Action Group -->
+      <div class="flex items-center space-x-3">
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle" aria-label="Toggle Theme"
+          class="p-2 rounded-full border border-borderLight dark:border-borderDark hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
+          <svg id="sun-icon" class="w-4 h-4 hidden dark:block text-amber-400" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z">
+            </path>
+          </svg>
+          <svg id="moon-icon" class="w-4 h-4 block dark:hidden text-slate-700" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+          </svg>
+        </button>
+
+
+      </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="max-w-5xl mx-auto px-4 sm:px-6 pt-16 sm:pt-24 pb-16">
+    <!-- Status Badge -->
+    <div
+      class="animate-hero-1 inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-emerald-500/20 bg-emerald-500/5 text-emerald-600 dark:text-emerald-400 mb-6">
+      <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+      <span>Open to Trainee / Junior Software Developer roles</span>
+    </div>
+
+    <!-- Title -->
+    <h1 class="animate-hero-2 text-4xl sm:text-6xl font-bold tracking-tight mb-4">
+      Hi, <span class="text-emerald-600 dark:text-emerald-400">Alan</span> here.
+    </h1>
+
+    <!-- Subtitle -->
+    <p class="animate-hero-3 text-lg sm:text-2xl font-mono text-muted dark:text-muted-dark mb-6 tracking-tight">
+      Software Developer · C++ & Clean Code · San Fernando, Buenos Aires
+    </p>
+
+    <!-- Lead Bio -->
+    <p class="animate-hero-4 text-base sm:text-lg text-slate-700 dark:text-slate-300 max-w-2xl leading-relaxed mb-8">
+      I am a Programming student at <strong class="text-ink dark:text-ink-dark">Universidad Tecnológica Nacional
+        (UTN)</strong> building structured, maintainable C++ software and accelerating development with <strong
+        class="text-ink dark:text-ink-dark">Spec-Driven Development (SDD)</strong> and Google Antigravity.
+    </p>
+
+    <!-- CTAs & Social Links -->
+    <div class="animate-hero-4 flex flex-wrap items-center gap-4">
+
+      <a href="https://github.com/ciccarellialan" target="_blank" rel="noopener"
+        class="px-4 py-3 rounded-xl border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark font-mono text-sm hover:border-emerald-500/50 transition-all flex items-center gap-2 hover:-translate-y-0.5">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+          <path fill-rule="evenodd" clip-rule="evenodd"
+            d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" />
+        </svg>
+        <span>GitHub</span>
+      </a>
+
+      <a href="https://www.linkedin.com/in/alanciccarelli/" target="_blank" rel="noopener"
+        class="px-4 py-3 rounded-xl border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark font-mono text-sm hover:border-emerald-500/50 transition-all flex items-center gap-2 hover:-translate-y-0.5">
+        <svg class="w-4 h-4 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
+          <path
+            d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.5a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26z" />
+        </svg>
+        <span>LinkedIn</span>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION 1: WORKFLOW -->
+  <section id="workflow"
+    class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-borderLight dark:border-borderDark">
+    <div class="reveal-on-scroll">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-sm">## /</span>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">development approach</h2>
+      </div>
+      <p class="text-sm sm:text-base text-muted dark:text-muted-dark mb-8 max-w-3xl">
+        How I approach software engineering: combining strict C++ architecture, Clean Code principles (DRY & SRP), and
+        Spec-Driven Development (SDD) using Google Antigravity.
+      </p>
+    </div>
+
+    <!-- Animated Pipeline Diagram Card -->
+    <div
+      class="reveal-on-scroll bg-card dark:bg-card-dark rounded-2xl border border-borderLight dark:border-borderDark p-6 sm:p-8 shadow-sm">
+      <div class="flex items-center justify-between mb-6 pb-4 border-b border-borderLight dark:border-borderDark">
+        <div class="flex items-center gap-2 font-mono text-xs text-muted dark:text-muted-dark">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span>PIPELINE ARCHITECTURE</span>
+        </div>
+        <span
+          class="font-mono text-xs px-2.5 py-1 rounded bg-black/5 dark:bg-white/5 text-slate-600 dark:text-slate-400">Spec-Driven
+          Development (SDD)</span>
+      </div>
+
+      <!-- Horizontal Pipeline Nodes (SVG Responsive Flow) -->
+      <div class="relative overflow-x-auto py-4">
+        <div class="min-w-[680px] flex items-center justify-between relative px-4">
+
+          <!-- Connecting Dashed SVG Line -->
+          <svg class="absolute top-1/2 left-0 w-full h-8 -translate-y-1/2 pointer-events-none z-0 px-12"
+            preserveAspectRatio="none">
+            <line x1="0" y1="16" x2="100%" y2="16" stroke="currentColor" class="text-emerald-500/40 pipeline-dash"
+              stroke-width="2" />
+          </svg>
+
+          <!-- Node 1 -->
+          <div
+            class="relative z-10 flex flex-col items-center bg-paper dark:bg-paper-dark p-3.5 rounded-xl border border-borderLight dark:border-borderDark w-36 hover:scale-105 transition-transform text-center shadow-xs">
+            <div
+              class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-mono text-xs font-bold mb-2">
+              01</div>
+            <span class="font-mono text-xs font-bold text-ink dark:text-ink-dark">Specs & Requirements</span>
+            <span class="text-[10px] text-muted dark:text-muted-dark mt-1">Clear scope definition</span>
+          </div>
+
+          <!-- Node 2 -->
+          <div
+            class="relative z-10 flex flex-col items-center bg-paper dark:bg-paper-dark p-3.5 rounded-xl border border-borderLight dark:border-borderDark w-36 hover:scale-105 transition-transform text-center shadow-xs">
+            <div
+              class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-mono text-xs font-bold mb-2">
+              02</div>
+            <span class="font-mono text-xs font-bold text-ink dark:text-ink-dark">Google Antigravity</span>
+            <span class="text-[10px] text-muted dark:text-muted-dark mt-1">SDD AI Workflow</span>
+          </div>
+
+          <!-- Node 3 -->
+          <div
+            class="relative z-10 flex flex-col items-center bg-paper dark:bg-paper-dark p-3.5 rounded-xl border border-borderLight dark:border-borderDark w-36 hover:scale-105 transition-transform text-center shadow-xs">
+            <div
+              class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-mono text-xs font-bold mb-2">
+              03</div>
+            <span class="font-mono text-xs font-bold text-ink dark:text-ink-dark">Modular C++</span>
+            <span class="text-[10px] text-muted dark:text-muted-dark mt-1">.h / .cpp separation</span>
+          </div>
+
+          <!-- Node 4 -->
+          <div
+            class="relative z-10 flex flex-col items-center bg-paper dark:bg-paper-dark p-3.5 rounded-xl border border-borderLight dark:border-borderDark w-36 hover:scale-105 transition-transform text-center shadow-xs">
+            <div
+              class="w-8 h-8 rounded-lg bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-mono text-xs font-bold mb-2">
+              04</div>
+            <span class="font-mono text-xs font-bold text-ink dark:text-ink-dark">Clean Code & DRY</span>
+            <span class="text-[10px] text-muted dark:text-muted-dark mt-1">SRP & Readability</span>
+          </div>
+
+          <!-- Node 5 -->
+          <div
+            class="relative z-10 flex flex-col items-center bg-paper dark:bg-paper-dark p-3.5 rounded-xl border border-borderLight dark:border-borderDark w-36 hover:scale-105 transition-transform text-center shadow-xs">
+            <div
+              class="w-8 h-8 rounded-lg bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 flex items-center justify-center font-mono text-xs font-bold mb-2">
+              05</div>
+            <span class="font-mono text-xs font-bold text-ink dark:text-ink-dark">Git / GitHub</span>
+            <span class="text-[10px] text-muted dark:text-muted-dark mt-1">Version control</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Core Highlights List -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 pt-6 border-t border-borderLight dark:border-borderDark">
+        <div
+          class="p-3.5 rounded-xl bg-paper/50 dark:bg-paper-dark/50 border border-borderLight/60 dark:border-borderDark/60">
+          <h4 class="font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Modular C++
+            Architecture</h4>
+          <p class="text-xs text-muted dark:text-muted-dark leading-relaxed">Separating function prototypes into header
+            files (<code class="text-slate-800 dark:text-slate-200">.h</code>) and implementations into (<code
+              class="text-slate-800 dark:text-slate-200">.cpp</code>) modules for maximum clarity and testability.</p>
+        </div>
+        <div
+          class="p-3.5 rounded-xl bg-paper/50 dark:bg-paper-dark/50 border border-borderLight/60 dark:border-borderDark/60">
+          <h4 class="font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Clean Code (DRY & SRP)
+          </h4>
+          <p class="text-xs text-muted dark:text-muted-dark leading-relaxed">Don't Repeat Yourself (DRY) and Single
+            Responsibility Principle (SRP) to eliminate boilerplate and ensure long-term maintainability.</p>
+        </div>
+        <div
+          class="p-3.5 rounded-xl bg-paper/50 dark:bg-paper-dark/50 border border-borderLight/60 dark:border-borderDark/60">
+          <h4 class="font-mono text-xs font-semibold text-emerald-600 dark:text-emerald-400 mb-1">Spec-Driven
+            Development</h4>
+          <p class="text-xs text-muted dark:text-muted-dark leading-relaxed">Leveraging Google Antigravity to craft
+            specs prior to execution, accelerating turnaround and reducing refactoring cycles.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 2: PROJECTS -->
+  <section id="projects"
+    class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-borderLight dark:border-borderDark">
+    <div class="reveal-on-scroll">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-sm">## /</span>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">projects built in C++</h2>
+      </div>
+      <p class="text-sm sm:text-base text-muted dark:text-muted-dark mb-8">
+        Academic and personal C++ implementations emphasizing mathematical precision, clean structure, and modular
+        engineering.
+      </p>
+    </div>
+
+    <!-- PROJECTS SLIDER PANEL -->
+    <div id="projects-slider-panel" tabindex="0" aria-label="Projects showcase slider"
+      class="reveal-on-scroll bg-card dark:bg-card-dark rounded-2xl border border-borderLight dark:border-borderDark shadow-sm overflow-hidden focus:outline-none focus:ring-2 focus:ring-emerald-500/40">
+
+      <!-- Panel Top Bar: Status, Quick Tabs & Arrow Controls -->
+      <div
+        class="flex flex-wrap items-center justify-between gap-3 px-4 sm:px-6 py-3.5 bg-paper/70 dark:bg-paper-dark/60 border-b border-borderLight dark:border-borderDark">
+        <div class="flex items-center gap-2.5 font-mono text-xs text-muted dark:text-muted-dark">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+          <span class="font-semibold text-ink dark:text-ink-dark">PROJECT PANEL</span>
+          <span class="text-borderLight dark:text-borderDark">|</span>
+          <span id="project-slide-counter"
+            class="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-bold">01 /
+            03</span>
+        </div>
+
+        <!-- Quick Jump Tabs -->
+        <div class="flex items-center gap-1.5 font-mono text-xs order-3 sm:order-2 w-full sm:w-auto justify-center">
+          <button type="button" onclick="goToProjectSlide(0)" id="project-tab-0"
+            class="px-3 py-1.5 rounded-lg bg-emerald-500 text-white font-semibold transition-all shadow-xs">
+            Descriptive Statistics Calculator
+          </button>
+          <button type="button" onclick="goToProjectSlide(1)" id="project-tab-1"
+            class="px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:bg-black/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-ink-dark transition-all">
+            The Programming Challenges
+          </button>
+          <button type="button" onclick="goToProjectSlide(2)" id="project-tab-2"
+            class="px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:bg-black/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-ink-dark transition-all">
+            EnfrenDados
+          </button>
+        </div>
+
+        <!-- Prev / Next Buttons -->
+        <div class="flex items-center gap-2 order-2 sm:order-3">
+          <button type="button" id="project-prev-btn" onclick="prevProjectSlide()" aria-label="Previous project"
+            class="w-8 h-8 rounded-lg border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all flex items-center justify-center font-mono text-sm">
+            ←
+          </button>
+          <button type="button" id="project-next-btn" onclick="nextProjectSlide()" aria-label="Next project"
+            class="w-8 h-8 rounded-lg border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark hover:border-emerald-500/50 hover:text-emerald-600 dark:hover:text-emerald-400 transition-all flex items-center justify-center font-mono text-sm">
+            →
+          </button>
+        </div>
+      </div>
+
+      <!-- Slider Viewport & Track -->
+      <div id="projects-slider-viewport" class="overflow-hidden relative transition-[height] duration-300 ease-out">
+        <div id="projects-slider-track"
+          class="flex items-start transition-transform duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] will-change-transform">
+
+          <!-- PROJECT 1: Calculadora de Estadística Descriptiva -->
+          <article class="w-full shrink-0 p-6 sm:p-8 group" data-project-slide="0">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+
+                  <span
+                    class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold">Personal
+                    Project</span>
+                  <span class="font-mono text-xs text-muted dark:text-muted-dark">C++ Engine & Live Web UI</span>
+                </div>
+                <h3
+                  class="text-2xl font-bold tracking-tight text-ink dark:text-ink-dark group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  Descriptive Statistics Calculator
+                </h3>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                <a href="file:///C:/Users/wz/Desktop/Descriptive-Statistics-Calculator%20-%20copia/index.html"
+                  target="_blank" rel="noopener"
+                  class="px-3.5 py-1.5 rounded-lg bg-emerald-500 text-white font-mono text-xs font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-1.5 shadow-xs">
+                  <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                  <span>Live Interface</span>
+                  <span class="text-xs">↗</span>
+                </a>
+                <a href="https://github.com/ciccarellialan/Descriptive-Statistics-Calculator" target="_blank"
+                  rel="noopener"
+                  class="px-3.5 py-1.5 rounded-lg border border-borderLight dark:border-borderDark font-mono text-xs hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center gap-1.5">
+                  <span>GitHub Repo</span>
+                  <span class="text-xs">↗</span>
+                </a>
+                <button onclick="openDrawer('calc')"
+                  class="px-3.5 py-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-mono text-xs font-semibold hover:bg-emerald-500/20 transition-colors">
+                  Case Study →
+                </button>
+              </div>
+            </div>
+
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+              Console application for computing measures of central tendency and dispersion, frequency tables, bar
+              charts,
+              and interval analysis. Built applying Clean Code, DRY, and SRP by separating logic into single-purpose
+              functions and modular C++ components — now connected to its interactive web interface.
+            </p>
+
+            <!-- 2-Panel Interactive View Switcher (Live App + Architecture) -->
+            <div
+              class="rounded-xl border border-borderLight dark:border-borderDark bg-paper dark:bg-paper-dark overflow-hidden">
+              <div
+                class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-black/5 dark:bg-white/5 border-b border-borderLight dark:border-borderDark">
+                <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                  <button type="button" onclick="switchProjectView('calc', 'live')" id="calc-btn-live"
+                    class="px-2.5 py-1 rounded bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 shadow-xs inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Live Interface</span>
+                  </button>
+                  <button type="button" onclick="switchProjectView('calc', 'tree')" id="calc-btn-tree"
+                    class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">.h
+                    /
+                    .cpp Architecture</button>
+                </div>
+                <div class="flex items-center gap-2 font-mono text-[11px]">
+                  <button type="button" onclick="openCalcModal()"
+                    class="px-2 py-1 rounded border border-borderLight dark:border-borderDark bg-card/70 dark:bg-card-dark/70 text-muted dark:text-muted-dark hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 transition-colors"
+                    title="Expand live calculator to fullscreen">
+                    ⤢ Expand
+                  </button>
+                  <a href="file:///C:/Users/wz/Desktop/Descriptive-Statistics-Calculator%20-%20copia/index.html"
+                    target="_blank" rel="noopener"
+                    class="px-2 py-1 rounded border border-borderLight dark:border-borderDark bg-card/70 dark:bg-card-dark/70 text-emerald-600 dark:text-emerald-400 hover:border-emerald-500/50 transition-colors font-semibold">
+                    Open ↗
+                  </a>
+                </div>
+              </div>
+
+              <!-- View 0: Live Embedded Web Interface -->
+              <div id="calc-view-live" class="relative bg-paper dark:bg-paper-dark">
+                <iframe id="calc-live-iframe"
+                  src="file:///C:/Users/wz/Desktop/Descriptive-Statistics-Calculator%20-%20copia/index.html"
+                  title="Descriptive Statistics Calculator — Live Interactive Interface"
+                  class="w-full h-[680px] sm:h-[740px] border-0 block bg-paper dark:bg-paper-dark" loading="lazy"></iframe>
+              </div>
+
+              <div id="calc-code-container" class="hidden p-4 font-mono text-xs leading-relaxed overflow-x-auto">
+                <!-- View 1: Architecture Tree -->
+                <div id="calc-view-tree" class="hidden text-slate-700 dark:text-slate-300 space-y-1">
+                  <div class="text-emerald-600 dark:text-emerald-400 font-bold">src/</div>
+                  <div>├── main.cpp <span class="text-muted dark:text-muted-dark">// Program entry point & UI
+                      loop</span>
+                  </div>
+                  <div>├── stats_calculator.h <span class="text-muted dark:text-muted-dark">// Function declarations &
+                      SRP
+                      definitions</span></div>
+                  <div>├── stats_calculator.cpp <span class="text-muted dark:text-muted-dark">// Implementation of mean,
+                      median, variance</span></div>
+                  <div>├── frequency_table.h <span class="text-muted dark:text-muted-dark">// Interval calculation
+                      interfaces</span></div>
+                  <div>└── frequency_table.cpp <span class="text-muted dark:text-muted-dark">// Frequency distribution &
+                      ASCII bar render</span></div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 2: The Programming Challenges -->
+          <article class="w-full shrink-0 p-6 sm:p-8 group" data-project-slide="1">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                  <span
+                    class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-semibold">Continuous
+                    Practice</span>
+                  <span class="font-mono text-xs text-muted dark:text-muted-dark">Algorithms & Data Structures</span>
+                </div>
+                <h3
+                  class="text-2xl font-bold tracking-tight text-ink dark:text-ink-dark group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  The Programming Challenges
+                </h3>
+              </div>
+
+              <div class="flex items-center gap-3 shrink-0">
+                <a href="https://github.com/ciccarellialan/The-programming-Challenges" target="_blank" rel="noopener"
+                  class="px-3.5 py-1.5 rounded-lg border border-borderLight dark:border-borderDark font-mono text-xs hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center gap-1.5">
+                  <span>GitHub Repo</span>
+                  <span class="text-xs">↗</span>
+                </a>
+                <button onclick="openDrawer('challenges')"
+                  class="px-3.5 py-1.5 rounded-lg bg-emerald-500 text-white font-mono text-xs font-semibold hover:bg-emerald-600 transition-colors">
+                  Case Study →
+                </button>
+              </div>
+            </div>
+
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+              Repository based on the book <em>The Programming Challenges</em>, focused on honing fundamental computer
+              science principles, algorithmic problem-solving, and solution reviews prioritizing readability and
+              descriptive
+              naming.
+            </p>
+
+            <!-- 3-Panel Interactive View Switcher -->
+            <div
+              class="rounded-xl border border-borderLight dark:border-borderDark bg-paper dark:bg-paper-dark overflow-hidden">
+              <div
+                class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-black/5 dark:bg-white/5 border-b border-borderLight dark:border-borderDark">
+                <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                  <button onclick="switchProjectView('chal', 'output')" id="chal-btn-output"
+                    class="px-2.5 py-1 rounded bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 shadow-xs">Algorithmic
+                    Runner</button>
+                  <button onclick="switchProjectView('chal', 'tree')" id="chal-btn-tree"
+                    class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">Repo
+                    Structure</button>
+                  <button onclick="switchProjectView('chal', 'code')" id="chal-btn-code"
+                    class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">Solution
+                    Audit</button>
+                </div>
+                <span class="font-mono text-[10px] text-muted dark:text-muted-dark uppercase tracking-wider">Algorithm
+                  Practice</span>
+              </div>
+
+              <div class="p-4 font-mono text-xs leading-relaxed overflow-x-auto">
+                <!-- View 1: Console -->
+                <div id="chal-view-output" class="text-emerald-700 dark:text-emerald-400 space-y-1">
+                  <div>[RUNNER] Executing Challenge 1.6.1: The 3n + 1 Problem</div>
+                  <div>Input Range: i = 1, j = 10</div>
+                  <div>Evaluating Cycle Lengths...</div>
+                  <div>Max Cycle Length for range [1, 10] = 20 (n = 9)</div>
+                  <div>[TEST STATUS] PASS (Time: 0.002s, Memory: 1.2MB)</div>
+                </div>
+
+                <!-- View 2: Tree -->
+                <div id="chal-view-tree" class="hidden text-slate-700 dark:text-slate-300 space-y-1">
+                  <div class="text-emerald-600 dark:text-emerald-400 font-bold">challenges/</div>
+                  <div>├── 01_getting_started/</div>
+                  <div>│ ├── 3n_plus_1.cpp</div>
+                  <div>│ └── minesweeper_matrix.cpp</div>
+                  <div>├── 02_data_structures/</div>
+                  <div>│ └── stack_evaluator.cpp</div>
+                  <div>└── README.md <span class="text-muted dark:text-muted-dark">// Problem statements & clean code
+                      breakdown</span></div>
+                </div>
+
+                <!-- View 3: Code -->
+                <div id="chal-view-code" class="hidden text-slate-800 dark:text-slate-200 space-y-1">
+                  <div class="text-purple-600 dark:text-purple-400">// Clean descriptive naming & self-documenting logic
+                  </div>
+                  <div><span class="text-blue-600 dark:text-blue-400">int</span> compute3nPlus1CycleLength(<span
+                      class="text-blue-600 dark:text-blue-400">long long</span> n) {</div>
+                  <div> <span class="text-blue-600 dark:text-blue-400">int</span> cycleLength = 1;</div>
+                  <div> <span class="text-blue-600 dark:text-blue-400">while</span> (n != 1) {</div>
+                  <div> n = (n % 2 == 0) ? (n / 2) : (3 * n + 1);</div>
+                  <div> cycleLength++;</div>
+                  <div> }</div>
+                  <div> <span class="text-blue-600 dark:text-blue-400">return</span> cycleLength;</div>
+                  <div>}</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          <!-- PROJECT 3: EnfrenDados -->
+          <article class="w-full shrink-0 p-6 sm:p-8 group" data-project-slide="2">
+            <div class="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-6">
+              <div>
+                <div class="flex flex-wrap items-center gap-2 mb-2">
+                  <span
+                    class="font-mono text-xs px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 font-semibold">Collaborative
+                    Academic Project</span>
+                  <span class="font-mono text-xs text-muted dark:text-muted-dark">C++ Game Engine & Live Web UI</span>
+                </div>
+                <h3
+                  class="text-2xl font-bold tracking-tight text-ink dark:text-ink-dark group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                  EnfrenDados
+                </h3>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-2.5 shrink-0">
+                <a href="file:///C:/Users/wz/Desktop/Game-EnfrenDados-main%20-%20copia/index.html"
+                  target="_blank" rel="noopener"
+                  class="px-3.5 py-1.5 rounded-lg bg-emerald-500 text-white font-mono text-xs font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-1.5 shadow-xs">
+                  <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                  <span>Live Interface</span>
+                  <span class="text-xs">↗</span>
+                </a>
+                <a href="https://github.com/ciccarellialan" target="_blank" rel="noopener"
+                  class="px-3.5 py-1.5 rounded-lg border border-borderLight dark:border-borderDark font-mono text-xs hover:bg-black/5 dark:hover:bg-white/5 transition-colors flex items-center gap-1.5">
+                  <span>GitHub Profile</span>
+                  <span class="text-xs">↗</span>
+                </a>
+                <button onclick="openDrawer('enfren')"
+                  class="px-3.5 py-1.5 rounded-lg border border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300 font-mono text-xs font-semibold hover:bg-emerald-500/20 transition-colors">
+                  Case Study →
+                </button>
+              </div>
+            </div>
+
+            <p class="text-sm sm:text-base text-slate-700 dark:text-slate-300 mb-6 leading-relaxed">
+              Turn-based two-player dice strategy game featuring full game rules, 2×D12 target rolls, D6 stock
+              transfers, and +10,000 automatic victory conditions. Built as a collaborative software development
+              project using arrays, <code
+                class="font-mono text-xs text-emerald-600 dark:text-emerald-400">.h/.cpp</code> header/source
+              separation, and <code class="font-mono text-xs text-emerald-600 dark:text-emerald-400">rlutil.h</code> —
+              now connected to its interactive web interface.
+            </p>
+
+            <!-- Interactive View Switcher (Live App + Architecture + Code) -->
+            <div
+              class="rounded-xl border border-borderLight dark:border-borderDark bg-paper dark:bg-paper-dark overflow-hidden">
+              <div
+                class="flex flex-wrap items-center justify-between gap-2 px-4 py-2.5 bg-black/5 dark:bg-white/5 border-b border-borderLight dark:border-borderDark">
+                <div class="flex flex-wrap items-center gap-2 font-mono text-xs">
+                  <button type="button" onclick="switchProjectView('enf', 'live')" id="enf-btn-live"
+                    class="px-2.5 py-1 rounded bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 shadow-xs inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>Live Interface</span>
+                  </button>
+                  <button type="button" onclick="switchProjectView('enf', 'tree')" id="enf-btn-tree"
+                    class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">.h
+                    /
+                    .cpp Architecture</button>
+                  <button type="button" onclick="switchProjectView('enf', 'code')" id="enf-btn-code"
+                    class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">Turn
+                    Engine Logic</button>
+                </div>
+                <div class="flex items-center gap-2 font-mono text-[11px]">
+                  <button type="button" onclick="openEnfModal()"
+                    class="px-2 py-1 rounded border border-borderLight dark:border-borderDark bg-card/70 dark:bg-card-dark/70 text-muted dark:text-muted-dark hover:text-emerald-600 dark:hover:text-emerald-400 hover:border-emerald-500/40 transition-colors"
+                    title="Expand live EnfrenDados interface to fullscreen">
+                    ⤢ Expand
+                  </button>
+                  <a href="file:///C:/Users/wz/Desktop/Game-EnfrenDados-main%20-%20copia/index.html"
+                    target="_blank" rel="noopener"
+                    class="px-2 py-1 rounded border border-borderLight dark:border-borderDark bg-card/70 dark:bg-card-dark/70 text-emerald-600 dark:text-emerald-400 hover:border-emerald-500/50 transition-colors font-semibold">
+                    Open ↗
+                  </a>
+                </div>
+              </div>
+
+              <!-- View 0: Live Embedded Web Interface -->
+              <div id="enf-view-live" class="relative bg-paper dark:bg-paper-dark">
+                <iframe id="enf-live-iframe"
+                  src="file:///C:/Users/wz/Desktop/Game-EnfrenDados-main%20-%20copia/index.html"
+                  title="EnfrenDados — Live Interactive Dice Game Interface"
+                  class="w-full h-[680px] sm:h-[740px] border-0 block bg-paper dark:bg-paper-dark" loading="lazy"></iframe>
+              </div>
+
+              <div id="enf-code-container" class="hidden p-4 font-mono text-xs leading-relaxed overflow-x-auto">
+                <!-- View 1: Tree -->
+                <div id="enf-view-tree" class="hidden text-slate-700 dark:text-slate-300 space-y-1">
+                  <div class="text-emerald-600 dark:text-emerald-400 font-bold">Game-EnfrenDados/</div>
+                  <div>├── main.cpp <span class="text-muted dark:text-muted-dark">// Interactive menu loop (Jugar,
+                      Reglas, Creditos, Estadisticas)</span>
+                  </div>
+                  <div>├── funciones.h <span class="text-muted dark:text-muted-dark">// Prototypes for dice rolls,
+                      initiative, rounds & stats</span></div>
+                  <div>├── funciones.cpp <span class="text-muted dark:text-muted-dark">// 3-round loop, 2×D12 target,
+                      D6 stock transfers & +10,000 win</span></div>
+                  <div>├── rlutil.h <span class="text-muted dark:text-muted-dark">// External console UI & color
+                      library</span></div>
+                  <div>└── index.html <span class="text-emerald-600 dark:text-emerald-400">// Live interactive web
+                      interface</span></div>
+                </div>
+
+                <!-- View 2: Code -->
+                <div id="enf-view-code" class="hidden text-slate-800 dark:text-slate-200 space-y-1">
+                  <div class="text-purple-600 dark:text-purple-400">// Turn resolution &amp; +10,000 automatic victory
+                    check (funciones.cpp)</div>
+                  <div><span class="text-blue-600 dark:text-blue-400">if</span> (numeroObjetivo == sumaSeleccionada) {
+                  </div>
+                  <div> &nbsp;&nbsp;cantidadDadosStock -= cantDadosElegidos;</div>
+                  <div> &nbsp;&nbsp;cantidadDadosContrincante += cantDadosElegidos;</div>
+                  <div> &nbsp;&nbsp;puntajeTotal = sumaSeleccionada * cantDadosElegidos;</div>
+                  <div> &nbsp;&nbsp;<span class="text-blue-600 dark:text-blue-400">if</span> (cantidadDadosStock &lt;=
+                    0) {</div>
+                  <div> &nbsp;&nbsp;&nbsp;&nbsp;puntajeTotal += 10000; <span
+                      class="text-purple-600 dark:text-purple-400">// Automatic victory bonus</span></div>
+                  <div> &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-blue-600 dark:text-blue-400">return</span> 10000;
+                  </div>
+                  <div> &nbsp;&nbsp;}</div>
+                  <div>}</div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+
+      <!-- Panel Bottom Bar: Interactive Range Slider & Indicators -->
+      <div
+        class="px-6 py-4 bg-paper/70 dark:bg-paper-dark/60 border-t border-borderLight dark:border-borderDark flex flex-col gap-3">
+        <div class="flex items-center gap-4">
+          <span class="font-mono text-[11px] text-muted dark:text-muted-dark uppercase tracking-wider shrink-0">Slide
+            Project</span>
+          <input id="project-range-slider" type="range" min="0" max="2" step="1" value="0"
+            aria-label="Select project slide" class="project-range-slider w-full bg-borderLight dark:bg-borderDark" />
+        </div>
+        <div class="flex items-center justify-between font-mono text-[11px] text-muted dark:text-muted-dark">
+          <button type="button" onclick="goToProjectSlide(0)" id="project-label-0"
+            class="text-emerald-600 dark:text-emerald-400 font-semibold transition-colors text-left">
+            #1 Estadística
+          </button>
+          <button type="button" onclick="goToProjectSlide(1)" id="project-label-1"
+            class="hover:text-ink dark:hover:text-ink-dark transition-colors text-center">
+            #2 Challenges
+          </button>
+          <button type="button" onclick="goToProjectSlide(2)" id="project-label-2"
+            class="hover:text-ink dark:hover:text-ink-dark transition-colors text-right">
+            #3 EnfrenDados
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 3: EDUCATION & SKILLS -->
+  <section id="education"
+    class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-borderLight dark:border-borderDark">
+    <div class="reveal-on-scroll">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-sm">## /</span>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">learning log & qualifications</h2>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+
+      <!-- Education Column -->
+      <div class="space-y-6">
+        <h3 class="font-mono text-xs font-semibold text-muted dark:text-muted-dark uppercase tracking-wider mb-4">
+          Academic Background</h3>
+
+        <div
+          class="reveal-on-scroll bg-card dark:bg-card-dark p-6 rounded-2xl border border-borderLight dark:border-borderDark">
+          <div
+            class="flex items-center justify-between text-xs font-mono text-emerald-600 dark:text-emerald-400 font-semibold mb-2">
+            <span>2024 – Actualidad</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/10">In Progress</span>
+          </div>
+          <h4 class="text-lg font-bold text-ink dark:text-ink-dark">Tecnicatura Universitaria en Programación</h4>
+          <p class="text-sm font-medium text-muted dark:text-muted-dark mb-3">Universidad Tecnológica Nacional (UTN) ·
+            Buenos Aires, Argentina</p>
+          <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
+            Focused on algorithm design, structured programming, object-oriented concepts, and modular software
+            engineering using C++.
+          </p>
+        </div>
+
+        <div
+          class="reveal-on-scroll bg-card dark:bg-card-dark p-6 rounded-2xl border border-borderLight dark:border-borderDark">
+          <div class="text-xs font-mono text-muted dark:text-muted-dark font-semibold mb-2">
+            2013 – 2019
+          </div>
+          <h4 class="text-lg font-bold text-ink dark:text-ink-dark">Bachiller en Ciencias Naturales</h4>
+          <p class="text-sm font-medium text-muted dark:text-muted-dark">Escuela Secundaria N.º 23 René Favaloro ·
+            Buenos Aires, Argentina</p>
+        </div>
+
+        <!-- Languages & Profile Info -->
+        <div
+          class="reveal-on-scroll bg-card dark:bg-card-dark p-6 rounded-2xl border border-borderLight dark:border-borderDark">
+          <h4 class="font-mono text-xs font-semibold text-muted dark:text-muted-dark uppercase tracking-wider mb-3">
+            Languages & Profile</h4>
+          <ul class="space-y-2.5 text-xs text-slate-700 dark:text-slate-300 font-mono">
+            <li class="flex items-center justify-between">
+              <span>Spanish</span>
+              <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Native</span>
+            </li>
+            <li class="flex items-center justify-between">
+              <span>English</span>
+              <a href="https://cert.efset.org/en/eiAj85" target="_blank" rel="noopener"
+                class="text-indigo-600 dark:text-indigo-400 underline font-semibold hover:opacity-80">Intermediate (EF
+                SET Cert) ↗</a>
+            </li>
+            <li
+              class="pt-2 border-t border-borderLight dark:border-borderDark text-slate-500 dark:text-slate-400 font-sans">
+              <span class="font-semibold text-slate-700 dark:text-slate-300">Additional info:</span> Persona con
+              discapacidad física (fully adapted desk setup, dedicated focus, and commitment to high-craft software).
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Tech Stack & Tools Column -->
+      <div class="space-y-6">
+        <h3 class="font-mono text-xs font-semibold text-muted dark:text-muted-dark uppercase tracking-wider mb-4">
+          Technical Stack & Capabilities</h3>
+
+        <div
+          class="reveal-on-scroll bg-card dark:bg-card-dark p-6 rounded-2xl border border-borderLight dark:border-borderDark space-y-4">
+          <div>
+            <h4
+              class="font-mono text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider mb-2">
+              Languages & Core</h4>
+            <div class="flex flex-wrap gap-2 font-mono text-xs">
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark font-bold">C++</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">Git</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">GitHub</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">Data
+                Structures</span>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-mono text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-wider mb-2">
+              Workflow & Tools</h4>
+            <div class="flex flex-wrap gap-2 font-mono text-xs">
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">Google
+                Antigravity</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">Spec-Driven
+                Dev (SDD)</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">Visual
+                Studio Code</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">GCC
+                / G++</span>
+            </div>
+          </div>
+
+          <div>
+            <h4 class="font-mono text-xs font-bold text-slate-700 dark:text-slate-300 uppercase tracking-wider mb-2">
+              Engineering Principles</h4>
+            <div class="flex flex-wrap gap-2 font-mono text-xs">
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">Clean
+                Code</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">DRY
+                (Don't Repeat Yourself)</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">SRP
+                (Single Responsibility)</span>
+              <span
+                class="px-3 py-1.5 rounded-lg bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark">Modular
+                .h/.cpp</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 4: NOTES -->
+  <section id="notes" class="max-w-5xl mx-auto px-4 sm:px-6 py-12 border-t border-borderLight dark:border-borderDark">
+    <div class="reveal-on-scroll">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-sm">## /</span>
+        <h2 class="text-xl sm:text-2xl font-bold tracking-tight">engineering notes</h2>
+      </div>
+      <p class="text-sm sm:text-base text-muted dark:text-muted-dark mb-8">
+        Personal insights and technical reflections gathered while building software and studying at UTN.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+      <!-- Note 1 -->
+      <article onclick="openNoteModal(1)"
+        class="reveal-on-scroll group cursor-pointer bg-card dark:bg-card-dark p-6 rounded-2xl border border-borderLight dark:border-borderDark hover:border-emerald-500/50 transition-all hover:-translate-y-1 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-xs font-mono text-muted dark:text-muted-dark mb-3">
+            <span>Practices · C++</span>
+            <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Read Note →</span>
+          </div>
+          <h3
+            class="text-lg font-bold text-ink dark:text-ink-dark group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors mb-2">
+            Clean Code, DRY & SRP in C++
+          </h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+            How modularizing header files (.h) and implementation files (.cpp) keeps console applications readable,
+            reusable, and maintainable over time.
+          </p>
+        </div>
+      </article>
+
+      <!-- Note 2 -->
+      <article onclick="openNoteModal(2)"
+        class="reveal-on-scroll group cursor-pointer bg-card dark:bg-card-dark p-6 rounded-2xl border border-borderLight dark:border-borderDark hover:border-emerald-500/50 transition-all hover:-translate-y-1 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-xs font-mono text-muted dark:text-muted-dark mb-3">
+            <span>Workflow · SDD</span>
+            <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Read Note →</span>
+          </div>
+          <h3
+            class="text-lg font-bold text-ink dark:text-ink-dark group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors mb-2">
+            Spec-Driven Development with Google Antigravity
+          </h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+            Defining clear specifications before writing a single line of C++ code streamlines logic, minimizes bug
+            cycles, and optimizes development speed.
+          </p>
+        </div>
+      </article>
+
+      <!-- Note 3 -->
+      <article onclick="openNoteModal(3)"
+        class="reveal-on-scroll group cursor-pointer bg-card dark:bg-card-dark p-6 rounded-2xl border border-borderLight dark:border-borderDark hover:border-emerald-500/50 transition-all hover:-translate-y-1 shadow-sm flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between text-xs font-mono text-muted dark:text-muted-dark mb-3">
+            <span>Teamwork · EnfrenDados</span>
+            <span class="text-emerald-600 dark:text-emerald-400 font-semibold">Read Note →</span>
+          </div>
+          <h3
+            class="text-lg font-bold text-ink dark:text-ink-dark group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors mb-2">
+            Collaborative Git & GitHub Workflow
+          </h3>
+          <p class="text-xs text-slate-600 dark:text-slate-400 line-clamp-3 leading-relaxed">
+            Key takeaways from developing a two-player C++ dice game in a team, coordinating branch changes, and
+            integrating external libraries cleanly.
+          </p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECTION 5: CONTACT -->
+  <section id="contact" class="max-w-5xl mx-auto px-4 sm:px-6 py-16 border-t border-borderLight dark:border-borderDark">
+    <div
+      class="reveal-on-scroll bg-card dark:bg-card-dark rounded-3xl border border-borderLight dark:border-borderDark p-8 sm:p-12 shadow-sm text-center max-w-3xl mx-auto">
+      <div
+        class="inline-flex items-center gap-2 font-mono text-xs text-emerald-600 dark:text-emerald-400 font-bold mb-4 uppercase tracking-wider">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>## / get in touch</span>
+      </div>
+
+      <h2 class="text-3xl sm:text-4xl font-bold tracking-tight mb-4">
+        Let's build structured software together.
+      </h2>
+
+      <p class="text-sm sm:text-base text-muted dark:text-muted-dark mb-8 leading-relaxed">
+        I am currently seeking opportunities as a <strong class="text-ink dark:text-ink-dark">Trainee or Junior Software
+          Developer</strong> in San Fernando, Buenos Aires or remote.
+      </p>
+
+      <!-- Email Interactive Copy Widget -->
+      <div
+        class="inline-flex flex-wrap items-center justify-center gap-3 p-2 rounded-2xl bg-paper dark:bg-paper-dark border border-borderLight dark:border-borderDark mb-8">
+        <span class="font-mono text-xs sm:text-sm font-semibold px-3 text-slate-800 dark:text-slate-200"
+          id="email-text">
+          ciccarellialan@outlook.com
+        </span>
+        <button onclick="copyEmail()" id="copy-btn"
+          class="px-4 py-2 rounded-xl bg-emerald-500 text-white font-mono text-xs font-semibold hover:bg-emerald-600 transition-all flex items-center gap-1.5 shadow-xs">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z">
+            </path>
+          </svg>
+          <span id="copy-btn-text">Copy</span>
+        </button>
+      </div>
+
+      <!-- Secondary Links -->
+      <div class="flex flex-wrap items-center justify-center gap-6 font-mono text-xs text-muted dark:text-muted-dark">
+        <a href="mailto:ciccarellialan@outlook.com"
+          class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Say hi! (Mailto) ↗</a>
+        <span>·</span>
+        <a href="https://www.linkedin.com/in/alanciccarelli/" target="_blank" rel="noopener"
+          class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">LinkedIn Profile ↗</a>
+        <span>·</span>
+        <a href="https://github.com/ciccarellialan" target="_blank" rel="noopener"
+          class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">GitHub ↗</a>
+        <span>·</span>
+        <span class="text-slate-700 dark:text-slate-300">+54 11 7134-5808</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer
+    class="border-t border-borderLight dark:border-borderDark py-8 text-center font-mono text-xs text-muted dark:text-muted-dark">
+    <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div>© 2026 Alan Ciccarelli · Engineered with C++ spirit & Clean Code.</div>
+      <div class="flex items-center gap-2">
+        <span>Inspired by high-craft editorial design</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast"
+    class="fixed bottom-6 right-6 z-50 bg-ink dark:bg-ink-dark text-paper dark:text-paper-dark px-4 py-3 rounded-xl font-mono text-xs font-semibold shadow-xl translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2">
+    <span class="text-emerald-400 font-bold">✓</span>
+    <span id="toast-message">Copied to clipboard!</span>
+  </div>
+
+  <!-- CASE STUDY DRAWER OVERLAY -->
+  <div id="drawer-backdrop" onclick="closeDrawer()"
+    class="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+  </div>
+  <aside id="drawer"
+    class="fixed top-0 right-0 h-full w-full max-w-2xl bg-card dark:bg-card-dark z-50 shadow-2xl border-l border-borderLight dark:border-borderDark transform translate-x-full transition-transform duration-300 ease-out overflow-y-auto p-6 sm:p-10">
+    <button onclick="closeDrawer()"
+      class="p-2 rounded-full border border-borderLight dark:border-borderDark hover:bg-black/5 dark:hover:bg-white/5 transition-colors mb-6">
+      ✕ Close
+    </button>
+    <div id="drawer-content"></div>
+  </aside>
+
+  <!-- NOTE MODAL OVERLAY -->
+  <div id="note-backdrop" onclick="closeNoteModal()"
+    class="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+  </div>
+  <div id="note-modal"
+    class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11/12 max-w-xl max-h-[85vh] overflow-y-auto bg-card dark:bg-card-dark rounded-3xl z-50 border border-borderLight dark:border-borderDark p-6 sm:p-8 shadow-2xl scale-95 opacity-0 pointer-events-none transition-all duration-300">
+    <div class="flex justify-between items-center mb-6">
+      <span id="note-category"
+        class="font-mono text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">Note</span>
+      <button onclick="closeNoteModal()"
+        class="text-xs font-mono px-2.5 py-1 rounded border border-borderLight dark:border-borderDark hover:bg-black/5 dark:hover:bg-white/5">Esc
+        ✕</button>
+    </div>
+    <h3 id="note-title" class="text-2xl font-bold mb-4"></h3>
+    <div id="note-body" class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed space-y-4"></div>
+  </div>
+
+  <!-- FULLSCREEN LIVE CALCULATOR MODAL -->
+  <div id="calc-live-modal"
+    class="fixed inset-0 z-50 bg-paper/95 dark:bg-paper-dark/95 backdrop-blur-md hidden flex-col p-3 sm:p-5">
+    <div
+      class="flex flex-wrap items-center justify-between gap-3 max-w-6xl mx-auto w-full pb-3 mb-3 border-b border-borderLight dark:border-borderDark font-mono text-xs">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-bold text-ink dark:text-ink-dark text-sm">Descriptive Statistics Calculator</span>
+        <span class="hidden sm:inline text-muted dark:text-muted-dark">/ Live Interactive Interface</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="file:///C:/Users/wz/Desktop/Descriptive-Statistics-Calculator%20-%20copia/index.html" target="_blank"
+          rel="noopener"
+          class="px-3 py-1.5 rounded-lg border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark text-emerald-600 dark:text-emerald-400 hover:border-emerald-500/50 transition-colors font-semibold">
+          Open in New Tab ↗
+        </a>
+        <button type="button" onclick="closeCalcModal()"
+          class="px-3 py-1.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-colors font-semibold">
+          ✕ Close
+        </button>
+      </div>
+    </div>
+    <div
+      class="flex-1 max-w-6xl mx-auto w-full rounded-2xl border border-borderLight dark:border-borderDark overflow-hidden shadow-2xl bg-paper dark:bg-paper-dark">
+      <iframe id="calc-modal-iframe" title="Descriptive Statistics Calculator — Fullscreen Live Interface"
+        class="w-full h-full border-0 block bg-paper dark:bg-paper-dark"></iframe>
+    </div>
+  </div>
+
+  <!-- FULLSCREEN LIVE ENFRENDADOS MODAL -->
+  <div id="enf-live-modal"
+    class="fixed inset-0 z-50 bg-paper/95 dark:bg-paper-dark/95 backdrop-blur-md hidden flex-col p-3 sm:p-5">
+    <div
+      class="flex flex-wrap items-center justify-between gap-3 max-w-6xl mx-auto w-full pb-3 mb-3 border-b border-borderLight dark:border-borderDark font-mono text-xs">
+      <div class="flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-bold text-ink dark:text-ink-dark text-sm">EnfrenDados</span>
+        <span class="hidden sm:inline text-muted dark:text-muted-dark">/ Live Interactive Dice Game</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a href="file:///C:/Users/wz/Desktop/Game-EnfrenDados-main%20-%20copia/index.html" target="_blank"
+          rel="noopener"
+          class="px-3 py-1.5 rounded-lg border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark text-emerald-600 dark:text-emerald-400 hover:border-emerald-500/50 transition-colors font-semibold">
+          Open in New Tab ↗
+        </a>
+        <button type="button" onclick="closeEnfModal()"
+          class="px-3 py-1.5 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 transition-colors font-semibold">
+          ✕ Close
+        </button>
+      </div>
+    </div>
+    <div
+      class="flex-1 max-w-6xl mx-auto w-full rounded-2xl border border-borderLight dark:border-borderDark overflow-hidden shadow-2xl bg-paper dark:bg-paper-dark">
+      <iframe id="enf-modal-iframe" title="EnfrenDados — Fullscreen Live Interface"
+        class="w-full h-full border-0 block bg-paper dark:bg-paper-dark"></iframe>
+    </div>
+  </div>
+
+  <!-- PLAYABLE 60FPS ARCADE GAME OVERLAY -->
+  <div id="game-overlay" class="fixed inset-0 z-50 bg-slate-950/95 flex flex-col justify-between p-4 hidden">
+
+    <!-- Game Header -->
+    <div class="flex items-center justify-between text-white font-mono text-xs max-w-4xl mx-auto w-full z-10">
+      <div class="flex items-center gap-3">
+        <span class="w-3 h-3 rounded-full bg-emerald-400 animate-ping"></span>
+        <span class="font-bold text-emerald-400 text-sm">ALAN'S CV RUNNER</span>
+        <span class="hidden sm:inline text-slate-400">| Score: <span id="game-score"
+            class="text-white font-bold">0</span></span>
+        <span class="hidden sm:inline text-slate-400">| Tokens: <span id="game-tokens"
+            class="text-emerald-400 font-bold">0</span>/9</span>
+      </div>
+      <button onclick="closeGameOverlay()"
+        class="px-3 py-1.5 rounded-lg bg-red-500/20 text-red-300 border border-red-500/40 hover:bg-red-500 hover:text-white transition-all font-semibold">
+        ✕ Exit Game
+      </button>
+    </div>
+
+    <!-- Canvas Container -->
+    <div
+      class="relative w-full max-w-4xl mx-auto flex-1 my-3 rounded-2xl border border-slate-800 bg-slate-900 overflow-hidden flex items-center justify-center">
+      <canvas id="gameCanvas" class="w-full h-full block"></canvas>
+
+      <!-- On Screen Instructions -->
+      <div id="game-start-prompt"
+        class="absolute inset-0 bg-slate-950/80 flex flex-col items-center justify-center p-6 text-center text-white font-mono">
+        <div
+          class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-2xl font-bold mb-4">
+          🎮</div>
+        <h3 class="text-xl font-bold text-emerald-400 mb-2">Alan's Milestone Quest</h3>
+        <p class="text-xs text-slate-300 max-w-md mb-6 leading-relaxed">
+          Jump across platforms representing Alan's real skills & CV milestones. Collect all 9 code tokens (<code
+            class="text-emerald-400">{ }</code>, <code class="text-emerald-400">.cpp</code>, <code
+            class="text-emerald-400">git</code>) to reach the UTN Software Developer Goal!
+        </p>
+        <button onclick="startGame()"
+          class="px-6 py-3 rounded-xl bg-emerald-500 text-slate-950 font-bold text-sm hover:bg-emerald-400 transition-all shadow-lg transform hover:scale-105">
+          START GAME
+        </button>
+        <div class="mt-4 text-[10px] text-slate-400">Controls: Left/Right Arrow or A/D to Move | Space / Up Arrow to
+          Jump</div>
+      </div>
+
+      <!-- Victory Overlay -->
+      <div id="game-victory"
+        class="absolute inset-0 bg-slate-950/90 flex flex-col items-center justify-center p-6 text-center text-white font-mono hidden">
+        <div
+          class="w-16 h-16 rounded-full bg-emerald-400 text-slate-950 flex items-center justify-center text-3xl mb-4">🏆
+        </div>
+        <h3 class="text-2xl font-bold text-emerald-400 mb-2">Milestone Quest Completed!</h3>
+        <p class="text-xs text-slate-300 max-w-md mb-4">
+          You collected all C++ and Clean Code tokens and unlocked Alan Ciccarelli's software engineering resume.
+        </p>
+        <div
+          class="bg-slate-900 border border-slate-800 p-4 rounded-xl text-left font-mono text-xs text-slate-300 mb-6 w-full max-w-md space-y-1">
+          <div class="text-emerald-400 font-bold">SUMMARY OF ALAN'S SKILLS:</div>
+          <div>✓ C++ Modular Architecture (.h / .cpp)</div>
+          <div>✓ Spec-Driven Development & Google Antigravity</div>
+          <div>✓ Clean Code (DRY & SRP Principles)</div>
+          <div>✓ UTN Tecnicatura Universitaria en Programación</div>
+        </div>
+        <div class="flex gap-4">
+          <button onclick="startGame()"
+            class="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-200 border border-slate-700 font-bold text-xs hover:bg-slate-700">Replay</button>
+          <button onclick="closeGameOverlay()"
+            class="px-5 py-2.5 rounded-xl bg-emerald-500 text-slate-950 font-bold text-xs hover:bg-emerald-400">Return
+            to Portfolio</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Touch Controls -->
+    <div class="flex items-center justify-between max-w-4xl mx-auto w-full text-white font-mono text-xs pt-1 z-10">
+      <div class="flex gap-2">
+        <button id="btn-left"
+          class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 active:bg-emerald-600 flex items-center justify-center text-base select-none">◀</button>
+        <button id="btn-right"
+          class="w-12 h-12 rounded-xl bg-slate-800 border border-slate-700 active:bg-emerald-600 flex items-center justify-center text-base select-none">▶</button>
+      </div>
+      <button id="btn-jump"
+        class="px-6 h-12 rounded-xl bg-emerald-500 text-slate-950 font-bold border border-emerald-400 active:bg-emerald-400 flex items-center justify-center text-sm select-none">
+        JUMP (SPACE)
+      </button>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT & INTERACTIVE LOGIC -->
+  <script>
+    /* ========================================================
+       1. Scroll Progress & Scroll Reveals
+       ======================================================== */
+    window.addEventListener('scroll', () => {
+      const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scroll-progress').style.width = scrolled + '%';
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.reveal-on-scroll').forEach(el => observer.observe(el));
+
+    /* ========================================================
+       2. Theme Toggle (Dark / Light)
+       ======================================================== */
+    const CALC_LIVE_URL = 'file:///C:/Users/wz/Desktop/Descriptive-Statistics-Calculator%20-%20copia/index.html';
+    const ENF_LIVE_URL = 'file:///C:/Users/wz/Desktop/Game-EnfrenDados-main%20-%20copia/index.html';
+
+    function syncCalcIframesTheme() {
+      const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      ['calc-live-iframe', 'calc-modal-iframe', 'enf-live-iframe', 'enf-modal-iframe'].forEach(id => {
+        const frame = document.getElementById(id);
+        if (frame && frame.contentWindow) {
+          try {
+            frame.contentWindow.postMessage({ type: 'portfolio-theme-sync', theme }, '*');
+          } catch (e) { /* ignore cross-origin/file restrictions */ }
+        }
+      });
+    }
+
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    themeToggleBtn.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+      syncCalcIframesTheme();
+    });
+
+    if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
+    ['calc-live-iframe', 'calc-modal-iframe', 'enf-live-iframe', 'enf-modal-iframe'].forEach(id => {
+      const frame = document.getElementById(id);
+      if (frame) {
+        frame.addEventListener('load', syncCalcIframesTheme);
+      }
+    });
+
+    function openCalcModal() {
+      const modal = document.getElementById('calc-live-modal');
+      const modalIframe = document.getElementById('calc-modal-iframe');
+      if (!modal || !modalIframe) return;
+      if (modalIframe.getAttribute('src') !== CALC_LIVE_URL) {
+        modalIframe.setAttribute('src', CALC_LIVE_URL);
+      }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      syncCalcIframesTheme();
+    }
+
+    function closeCalcModal() {
+      const modal = document.getElementById('calc-live-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    function openEnfModal() {
+      const modal = document.getElementById('enf-live-modal');
+      const modalIframe = document.getElementById('enf-modal-iframe');
+      if (!modal || !modalIframe) return;
+      const theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+      const targetUrl = `${ENF_LIVE_URL}#theme=${theme}`;
+      if (!modalIframe.getAttribute('src')) {
+        modalIframe.setAttribute('src', targetUrl);
+      }
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      document.body.style.overflow = 'hidden';
+      syncCalcIframesTheme();
+    }
+
+    function closeEnfModal() {
+      const modal = document.getElementById('enf-live-modal');
+      if (!modal) return;
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+      document.body.style.overflow = '';
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const calcModal = document.getElementById('calc-live-modal');
+        if (calcModal && !calcModal.classList.contains('hidden')) {
+          closeCalcModal();
+        }
+        const enfModal = document.getElementById('enf-live-modal');
+        if (enfModal && !enfModal.classList.contains('hidden')) {
+          closeEnfModal();
+        }
+      }
+    });
+
+    /* ========================================================
+       3. Interactive Project View Switcher & Projects Slider
+       ======================================================== */
+    let currentProjectSlide = 0;
+    const totalProjectSlides = 3;
+
+    function syncProjectViewportHeight() {
+      const viewport = document.getElementById('projects-slider-viewport');
+      const activeSlide = document.querySelector(`[data-project-slide="${currentProjectSlide}"]`);
+      if (viewport && activeSlide) {
+        viewport.style.height = activeSlide.offsetHeight + 'px';
+      }
+    }
+
+    function updateProjectSliderTrackFill() {
+      const rangeSlider = document.getElementById('project-range-slider');
+      if (!rangeSlider) return;
+      const pct = (currentProjectSlide / (totalProjectSlides - 1)) * 100;
+      const isDark = document.documentElement.classList.contains('dark');
+      const restColor = isDark ? '#1f293d' : '#e5e5e0';
+      rangeSlider.style.background = `linear-gradient(to right, #10b981 0%, #10b981 ${pct}%, ${restColor} ${pct}%, ${restColor} 100%)`;
+    }
+
+    function goToProjectSlide(index) {
+      currentProjectSlide = ((index % totalProjectSlides) + totalProjectSlides) % totalProjectSlides;
+
+      const track = document.getElementById('projects-slider-track');
+      if (track) {
+        track.style.transform = `translateX(-${currentProjectSlide * 100}%)`;
+      }
+
+      const counter = document.getElementById('project-slide-counter');
+      if (counter) {
+        counter.innerText = `0${currentProjectSlide + 1} / 0${totalProjectSlides}`;
+      }
+
+      const rangeSlider = document.getElementById('project-range-slider');
+      if (rangeSlider) {
+        rangeSlider.value = currentProjectSlide;
+        updateProjectSliderTrackFill();
+      }
+
+      for (let i = 0; i < totalProjectSlides; i++) {
+        const tab = document.getElementById(`project-tab-${i}`);
+        const label = document.getElementById(`project-label-${i}`);
+        if (tab) {
+          if (i === currentProjectSlide) {
+            tab.className = "px-3 py-1.5 rounded-lg bg-emerald-500 text-white font-semibold transition-all shadow-xs";
+          } else {
+            tab.className = "px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:bg-black/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-ink-dark transition-all";
+          }
+        }
+        if (label) {
+          const alignClass = i === 0 ? 'text-left' : (i === 1 ? 'text-center' : 'text-right');
+          if (i === currentProjectSlide) {
+            label.className = `text-emerald-600 dark:text-emerald-400 font-semibold transition-colors ${alignClass}`;
+          } else {
+            label.className = `hover:text-ink dark:hover:text-ink-dark transition-colors ${alignClass}`;
+          }
+        }
+      }
+
+      requestAnimationFrame(syncProjectViewportHeight);
+    }
+
+    function nextProjectSlide() {
+      goToProjectSlide(currentProjectSlide + 1);
+    }
+
+    function prevProjectSlide() {
+      goToProjectSlide(currentProjectSlide - 1);
+    }
+
+    // Bind range slider, keyboard arrows, swipe gestures, and theme sync
+    (function initProjectsSlider() {
+      const rangeSlider = document.getElementById('project-range-slider');
+      if (rangeSlider) {
+        rangeSlider.addEventListener('input', (e) => {
+          goToProjectSlide(parseInt(e.target.value, 10));
+        });
+      }
+
+      const sliderPanel = document.getElementById('projects-slider-panel');
+      if (sliderPanel) {
+        sliderPanel.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextProjectSlide();
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevProjectSlide();
+          }
+        });
+      }
+
+      const viewport = document.getElementById('projects-slider-viewport');
+      if (viewport) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        viewport.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        viewport.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          const delta = touchEndX - touchStartX;
+          if (Math.abs(delta) > 45) {
+            if (delta < 0) nextProjectSlide();
+            else prevProjectSlide();
+          }
+        }, { passive: true });
+      }
+
+      themeToggleBtn.addEventListener('click', updateProjectSliderTrackFill);
+      window.addEventListener('resize', syncProjectViewportHeight);
+      if (document.fonts && document.fonts.ready) {
+        document.fonts.ready.then(syncProjectViewportHeight);
+      }
+      goToProjectSlide(0);
+    })();
+
+    function switchProjectView(prefix, view) {
+      const codeContainer = document.getElementById(`${prefix}-code-container`);
+      if (codeContainer) {
+        codeContainer.classList.toggle('hidden', view === 'live');
+      }
+
+      ['live', 'output', 'tree', 'code'].forEach(v => {
+        const viewEl = document.getElementById(`${prefix}-view-${v}`);
+        const btnEl = document.getElementById(`${prefix}-btn-${v}`);
+        if (viewEl && btnEl) {
+          const liveExtra = v === 'live' ? ' inline-flex items-center gap-1.5' : '';
+          if (v === view) {
+            viewEl.classList.remove('hidden');
+            btnEl.className = `px-2.5 py-1 rounded bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 shadow-xs${liveExtra}`;
+          } else {
+            viewEl.classList.add('hidden');
+            btnEl.className = `px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark${liveExtra}`;
+          }
+        }
+      });
+
+      requestAnimationFrame(syncProjectViewportHeight);
+    }
+
+    /* ========================================================
+       4. Case Study Drawer & Notes Modal Data
+       ======================================================== */
+    const caseStudies = {
+      calc: {
+        title: "Calculadora de Estadística Descriptiva",
+        subtitle: "Personal Project | C++ Console Application & Live Web UI",
+        repo: "https://github.com/ciccarellialan/Descriptive-Statistics-Calculator",
+        liveUrl: CALC_LIVE_URL,
+        description: "A robust C++ console application engineered to perform complete descriptive statistical analyses on user datasets. Built with a focus on mathematical correctness, software modularity, and clean user experience.",
+        highlights: [
+          "Calculates mean, median, mode, variance, standard deviation, and range.",
+          "Generates frequency distribution tables and console-rendered ASCII bar charts.",
+          "Strict separation of concerns (SRP): core logic separated into reusable header (.h) and source (.cpp) modules.",
+          "Handles data input validation and zero-variance edge cases gracefully."
+        ]
+      },
+      challenges: {
+        title: "The Programming Challenges",
+        subtitle: "Continuous Practice | Algorithms & Data Structures",
+        repo: "https://github.com/ciccarellialan/The-programming-Challenges",
+        description: "A dedicated algorithm repository based on classic competitive programming exercises. Every solution is written with clear naming, step-by-step logic clarity, and optimal performance.",
+        highlights: [
+          "Problem-solving practice in core algorithms: math, dynamic programming, sorting, and recursion.",
+          "Focus on code readability and self-documenting code over obscure tricks.",
+          "Structured directory layout allowing rapid test case validation."
+        ]
+      },
+      enfren: {
+        title: "EnfrenDados",
+        subtitle: "Collaborative Academic Project | UTN & Live Web UI",
+        repo: "https://github.com/ciccarellialan",
+        liveUrl: ENF_LIVE_URL,
+        description: "Turn-based two-player dice strategy game developed collaboratively at UTN. Players roll 2×D12 target dice, combine D6 stock dice to hit the exact target sum, transfer used dice to their rival, or empty their stock for a +10,000 automatic victory.",
+        highlights: [
+          "Collaborative development using Git branch workflow.",
+          "Implementation of custom 3-round game loop, initiative duel, stock transfers, and +10,000 automatic victory.",
+          "Integration of external console graphics utility (rlutil.h) alongside a live reactive web interface."
+        ]
+      }
+    };
+
+    const notesData = {
+      1: {
+        category: "Practices · C++",
+        title: "Clean Code, DRY & SRP in C++",
+        body: `<p>In modern software engineering, code is read far more often than it is written. Applying the <strong>Single Responsibility Principle (SRP)</strong> means each function and header file does one thing and does it well.</p>
+               <p>By splitting functional declarations into <code>.h</code> files and implementations into <code>.cpp</code> files, we prevent monolithic spaghetti code. Combining this with <strong>DRY (Don't Repeat Yourself)</strong> ensures that statistical calculations, math utilities, or UI formatting exist in exactly one place.</p>`
+      },
+      2: {
+        category: "Workflow · SDD",
+        title: "Spec-Driven Development with Google Antigravity",
+        body: `<p><strong>Spec-Driven Development (SDD)</strong> shifts the focus from writing raw code immediately to crafting complete technical specifications first.</p>
+               <p>Using Google Antigravity in my daily workflow allows me to detail input structures, modular breakdown, and expected side effects before writing code. This drastically reduces refactoring overhead and yields cleaner C++ implementations on the very first try.</p>`
+      },
+      3: {
+        category: "Teamwork · EnfrenDados",
+        title: "Collaborative Git & GitHub Workflow",
+        body: `<p>Building <em>EnfrenDados</em> at UTN with team members was a hands-on masterclass in real-world version control.</p>
+               <p>We established clean branch conventions, modular function signatures in advance, and code reviews prior to merging into main. This eliminated code conflicts and ensured all components fitted together seamlessly.</p>`
+      }
+    };
+
+    function openDrawer(key) {
+      const data = caseStudies[key];
+      if (!data) return;
+
+      const html = `
+        <div class="space-y-6">
+          <div>
+            <span class="font-mono text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">${data.subtitle}</span>
+            <h3 class="text-3xl font-bold mt-1 text-ink dark:text-ink-dark">${data.title}</h3>
+          </div>
+
+          <p class="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">${data.description}</p>
+
+          <div class="bg-paper dark:bg-paper-dark p-4 rounded-xl border border-borderLight dark:border-borderDark">
+            <h4 class="font-mono text-xs font-bold mb-3 text-emerald-600 dark:text-emerald-400 uppercase">Key Technical Highlights</h4>
+            <ul class="space-y-2 text-xs text-slate-700 dark:text-slate-300 list-disc list-inside">
+              ${data.highlights.map(h => `<li>${h}</li>`).join('')}
+            </ul>
+          </div>
+
+          <div class="pt-4 flex flex-wrap gap-3">
+            ${data.liveUrl ? `
+            <a href="${data.liveUrl}" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-xl bg-emerald-500 text-white font-mono text-xs font-semibold hover:bg-emerald-600 transition-colors inline-flex items-center gap-2">
+              <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+              <span>Launch Live Interface</span>
+              <span>↗</span>
+            </a>` : ''}
+            <a href="${data.repo}" target="_blank" rel="noopener" class="px-5 py-2.5 rounded-xl ${data.liveUrl ? 'border border-borderLight dark:border-borderDark text-ink dark:text-ink-dark hover:bg-black/5 dark:hover:bg-white/5' : 'bg-emerald-500 text-white hover:bg-emerald-600'} font-mono text-xs font-semibold transition-colors inline-flex items-center gap-2">
+              <span>View Repository on GitHub</span>
+              <span>↗</span>
+            </a>
+          </div>
+        </div>
+      `;
+
+      document.getElementById('drawer-content').innerHTML = html;
+      document.getElementById('drawer-backdrop').classList.remove('opacity-0', 'pointer-events-none');
+      document.getElementById('drawer').classList.remove('translate-x-full');
+    }
+
+    function closeDrawer() {
+      document.getElementById('drawer-backdrop').classList.add('opacity-0', 'pointer-events-none');
+      document.getElementById('drawer').classList.add('translate-x-full');
+    }
+
+    function openNoteModal(id) {
+      const note = notesData[id];
+      if (!note) return;
+
+      document.getElementById('note-category').innerText = note.category;
+      document.getElementById('note-title').innerText = note.title;
+      document.getElementById('note-body').innerHTML = note.body;
+
+      const modal = document.getElementById('note-modal');
+      const backdrop = document.getElementById('note-backdrop');
+
+      backdrop.classList.remove('opacity-0', 'pointer-events-none');
+      modal.classList.remove('scale-95', 'opacity-0', 'pointer-events-none');
+    }
+
+    function closeNoteModal() {
+      const modal = document.getElementById('note-modal');
+      const backdrop = document.getElementById('note-backdrop');
+
+      backdrop.classList.add('opacity-0', 'pointer-events-none');
+      modal.classList.add('scale-95', 'opacity-0', 'pointer-events-none');
+    }
+
+    /* ========================================================
+       5. Copy Email Toast Notification
+       ======================================================== */
+    function copyEmail() {
+      const email = "ciccarellialan@outlook.com";
+
+      const el = document.createElement('textarea');
+      el.value = email;
+      document.body.appendChild(el);
+      el.select();
+      document.execCommand('copy');
+      document.body.removeChild(el);
+
+      const copyBtnText = document.getElementById('copy-btn-text');
+      copyBtnText.innerText = "✓ Copied!";
+
+      showToast("Email address copied to clipboard!");
+
+      setTimeout(() => {
+        copyBtnText.innerText = "Copy";
+      }, 3000);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-message').innerText = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 3000);
+    }
+
+    /* ========================================================
+       6. PLAYABLE 60FPS ARCADE GAME ENGINE
+       ======================================================== */
+    let canvas, ctx;
+    let gameLoopId = null;
+    let gameState = {
+      score: 0,
+      collectedCount: 0,
+      gameOver: false,
+      gameStarted: false
+    };
+
+    // Game Milestones / Platforms
+    const platforms = [
+      { x: 0, y: 320, w: 220, h: 20, label: "UTN 2024", color: "#10b981" },
+      { x: 260, y: 270, w: 140, h: 20, label: "C++ Modular", color: "#6366f1" },
+      { x: 450, y: 220, w: 150, h: 20, label: "Clean Code", color: "#10b981" },
+      { x: 650, y: 180, w: 160, h: 20, label: "DRY & SRP", color: "#6366f1" },
+      { x: 860, y: 230, w: 160, h: 20, label: "SDD + Antigravity", color: "#10b981" },
+      { x: 1070, y: 280, w: 150, h: 20, label: "Stats Calc", color: "#6366f1" },
+      { x: 1270, y: 220, w: 160, h: 20, label: "Challenges", color: "#10b981" },
+      { x: 1480, y: 170, w: 150, h: 20, label: "EnfrenDados", color: "#6366f1" },
+      { x: 1680, y: 240, w: 220, h: 20, label: "Git / GitHub Goal", color: "#10b981" }
+    ];
+
+    let tokens = [
+      { x: 90, y: 270, text: "{ }", collected: false },
+      { x: 320, y: 220, text: ".cpp", collected: false },
+      { x: 510, y: 170, text: ".h", collected: false },
+      { x: 710, y: 130, text: "DRY", collected: false },
+      { x: 920, y: 180, text: "SDD", collected: false },
+      { x: 1120, y: 230, text: "N=15", collected: false },
+      { x: 1330, y: 170, text: "3n+1", collected: false },
+      { x: 1530, y: 120, text: "🎲", collected: false },
+      { x: 1760, y: 190, text: "git", collected: false }
+    ];
+
+    const player = {
+      x: 30,
+      y: 200,
+      w: 24,
+      h: 32,
+      vx: 0,
+      vy: 0,
+      speed: 4.5,
+      jumpPower: -10,
+      grounded: false
+    };
+
+    const keys = { left: false, right: false, up: false };
+
+    function openGameOverlay() {
+      document.getElementById('game-overlay').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+      initGameCanvas();
+    }
+
+    function closeGameOverlay() {
+      document.getElementById('game-overlay').classList.add('hidden');
+      document.body.style.overflow = '';
+      if (gameLoopId) cancelAnimationFrame(gameLoopId);
+      gameState.gameStarted = false;
+    }
+
+    function initGameCanvas() {
+      canvas = document.getElementById('gameCanvas');
+      ctx = canvas.getContext('2d');
+
+      // Adjust resolution based on container
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width;
+      canvas.height = rect.height;
+
+      // Event Listeners for Game Controls
+      window.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('keyup', handleKeyUp);
+
+      // Touch Control Setup
+      const btnLeft = document.getElementById('btn-left');
+      const btnRight = document.getElementById('btn-right');
+      const btnJump = document.getElementById('btn-jump');
+
+      btnLeft.onmousedown = btnLeft.ontouchstart = (e) => { e.preventDefault(); keys.left = true; };
+      btnLeft.onmouseup = btnLeft.ontouchend = (e) => { e.preventDefault(); keys.left = false; };
+
+      btnRight.onmousedown = btnRight.ontouchstart = (e) => { e.preventDefault(); keys.right = true; };
+      btnRight.onmouseup = btnRight.ontouchend = (e) => { e.preventDefault(); keys.right = false; };
+
+      btnJump.onmousedown = btnJump.ontouchstart = (e) => { e.preventDefault(); if (player.grounded) { player.vy = player.jumpPower; player.grounded = false; } };
+    }
+
+    function handleKeyDown(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = true;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = true;
+      if ((e.key === 'ArrowUp' || e.key === 'w' || e.key === 'W' || e.key === ' ') && player.grounded) {
+        player.vy = player.jumpPower;
+        player.grounded = false;
+      }
+    }
+
+    function handleKeyUp(e) {
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') keys.left = false;
+      if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') keys.right = false;
+    }
+
+    function startGame() {
+      document.getElementById('game-start-prompt').classList.add('hidden');
+      document.getElementById('game-victory').classList.add('hidden');
+
+      // Reset State
+      player.x = 40;
+      player.y = 200;
+      player.vx = 0;
+      player.vy = 0;
+      gameState.score = 0;
+      gameState.collectedCount = 0;
+      gameState.gameOver = false;
+      gameState.gameStarted = true;
+
+      tokens.forEach(t => t.collected = false);
+
+      document.getElementById('game-score').innerText = '0';
+      document.getElementById('game-tokens').innerText = '0';
+
+      if (gameLoopId) cancelAnimationFrame(gameLoopId);
+      gameLoop();
+    }
+
+    function gameLoop() {
+      if (!gameState.gameStarted) return;
+
+      updateGame();
+      renderGame();
+
+      gameLoopId = requestAnimationFrame(gameLoop);
+    }
+
+    function updateGame() {
+      // Movement
+      if (keys.left) player.vx = -player.speed;
+      else if (keys.right) player.vx = player.speed;
+      else player.vx *= 0.8;
+
+      // Gravity
+      player.vy += 0.55;
+
+      player.x += player.vx;
+      player.y += player.vy;
+
+      // Boundary / Pit fall reset
+      if (player.y > canvas.height + 100) {
+        player.x = 40;
+        player.y = 200;
+        player.vx = 0;
+        player.vy = 0;
+      }
+
+      // Platform collisions
+      player.grounded = false;
+      platforms.forEach(p => {
+        if (
+          player.x + player.w > p.x &&
+          player.x < p.x + p.w &&
+          player.y + player.h >= p.y &&
+          player.y + player.h <= p.y + 14 &&
+          player.vy >= 0
+        ) {
+          player.grounded = true;
+          player.vy = 0;
+          player.y = p.y - player.h;
+        }
+      });
+
+      // Token collection
+      tokens.forEach(t => {
+        if (!t.collected) {
+          const dx = (player.x + player.w / 2) - t.x;
+          const dy = (player.y + player.h / 2) - t.y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 26) {
+            t.collected = true;
+            gameState.score += 150;
+            gameState.collectedCount++;
+            document.getElementById('game-score').innerText = gameState.score;
+            document.getElementById('game-tokens').innerText = gameState.collectedCount;
+
+            // Victory check
+            if (gameState.collectedCount >= tokens.length) {
+              setTimeout(() => {
+                document.getElementById('game-victory').classList.remove('hidden');
+              }, 400);
+            }
+          }
+        }
+      });
+    }
+
+    function renderGame() {
+      // Clear Screen
+      ctx.fillStyle = '#090d16';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Camera offset to follow player horizontally
+      const cameraX = Math.max(0, player.x - canvas.width / 3);
+
+      ctx.save();
+      ctx.translate(-cameraX, 0);
+
+      // Draw Grid Lines (Engineering Aesthetic)
+      ctx.strokeStyle = '#1e293b';
+      ctx.lineWidth = 1;
+      for (let x = 0; x < 2200; x += 40) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, canvas.height);
+        ctx.stroke();
+      }
+
+      // Draw Platforms
+      platforms.forEach(p => {
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 8;
+        ctx.fillRect(p.x, p.y, p.w, p.h);
+        ctx.shadowBlur = 0;
+
+        // Platform Label
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '10px "JetBrains Mono"';
+        ctx.fillText(p.label, p.x + 8, p.y + 14);
+      });
+
+      // Draw Tokens
+      tokens.forEach(t => {
+        if (!t.collected) {
+          ctx.fillStyle = '#10b981';
+          ctx.beginPath();
+          ctx.arc(t.x, t.y, 12, 0, Math.PI * 2);
+          ctx.fill();
+
+          ctx.fillStyle = '#090d16';
+          ctx.font = 'bold 9px "JetBrains Mono"';
+          ctx.textAlign = 'center';
+          ctx.fillText(t.text, t.x, t.y + 3);
+        }
+      });
+
+      // Draw Player Character (Pixel Developer)
+      ctx.fillStyle = '#f43f5e'; // Shirt
+      ctx.fillRect(player.x, player.y + 10, player.w, 14);
+
+      ctx.fillStyle = '#fde047'; // Head
+      ctx.fillRect(player.x + 4, player.y, 16, 10);
+
+      ctx.fillStyle = '#1e293b'; // Pants
+      ctx.fillRect(player.x + 2, player.y + 24, player.w - 4, 8);
+
+      // Player Eyes
+      ctx.fillStyle = '#000000';
+      ctx.fillRect(player.x + 14, player.y + 3, 3, 3);
+
+      ctx.restore();
+    }
+
+    /* ========================================================
+       7. ORGANIC FLOATING PARTICLES & CURSOR REPULSION HALO
+       ======================================================== */
+    (function initCursorHaloField() {
+      const bgCanvas = document.getElementById('cursor-halo-canvas');
+      if (!bgCanvas) return;
+      const bgCtx = bgCanvas.getContext('2d');
+      if (!bgCtx) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Emerald, Indigo, Cyan, and Amber micro-particle palettes for Light & Dark modes
+      const PALETTES = {
+        light: [
+          { r: 16, g: 185, b: 129 },  // Emerald
+          { r: 79, g: 70, b: 229 },   // Indigo
+          { r: 6, g: 182, b: 212 },   // Cyan
+          { r: 217, g: 119, b: 6 }    // Amber
+        ],
+        dark: [
+          { r: 52, g: 211, b: 153 },  // Emerald
+          { r: 129, g: 140, b: 248 }, // Indigo
+          { r: 34, g: 211, b: 238 },  // Cyan
+          { r: 251, g: 191, b: 36 }   // Amber
+        ]
+      };
+
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+      let particles = [];
+      let lastTime = performance.now();
+      let elapsed = 0;
+      let scrollY = window.scrollY || 0;
+      let smoothScrollY = scrollY;
+
+      const pointer = {
+        x: -9999,
+        y: -9999,
+        targetX: -9999,
+        targetY: -9999,
+        active: false,
+        strength: 0,
+        panelScale: 1
+      };
+
+      const PANEL_SELECTOR = 'header, .bg-card.rounded-2xl, .bg-card.rounded-3xl, #drawer, #note-modal';
+
+      function getMinDistanceToPanel(px, py, maxCheckDist) {
+        const panels = document.querySelectorAll(PANEL_SELECTOR);
+        let minDist = maxCheckDist;
+
+        for (let i = 0; i < panels.length; i++) {
+          const el = panels[i];
+          if (
+            el.classList.contains('hidden') ||
+            el.classList.contains('pointer-events-none') ||
+            el.classList.contains('translate-x-full')
+          ) continue;
+
+          const rect = el.getBoundingClientRect();
+          if (rect.width < 2 || rect.height < 2) continue;
+          if (
+            rect.right < -maxCheckDist ||
+            rect.left > width + maxCheckDist ||
+            rect.bottom < -maxCheckDist ||
+            rect.top > height + maxCheckDist
+          ) {
+            continue;
+          }
+
+          const hw = rect.width * 0.5;
+          const hh = rect.height * 0.5;
+          const cx = rect.left + hw;
+          const cy = rect.top + hh;
+          const cornerR = el.tagName === 'HEADER'
+            ? 0
+            : (el.classList.contains('rounded-3xl') ? 24 : 16);
+          const r = Math.min(cornerR, hw, hh);
+
+          const qx = Math.abs(px - cx) - (hw - r);
+          const qy = Math.abs(py - cy) - (hh - r);
+          const signedDist =
+            Math.hypot(Math.max(qx, 0), Math.max(qy, 0)) +
+            Math.min(Math.max(qx, qy), 0) -
+            r;
+
+          if (signedDist <= 0) return 0;
+          if (signedDist < minDist) minDist = signedDist;
+        }
+
+        return minDist;
+      }
+
+      function getParticleCount() {
+        const area = width * height;
+        return Math.max(55, Math.min(120, Math.floor(area / 14000)));
+      }
+
+      function createParticle(index) {
+        const depth = 0.35 + Math.random() * 0.65; // Depth layer for parallax (0.35 far -> 1.0 near)
+        return {
+          colorIndex: index % 4,
+          depth,
+          baseX: Math.random() * width,
+          baseY: Math.random() * height,
+          driftX: (Math.random() - 0.5) * 16 * depth,
+          driftY: (Math.random() - 0.5) * 12 * depth - 4 * depth,
+          waveAmpX: (10 + Math.random() * 20) * depth,
+          waveAmpY: (10 + Math.random() * 20) * depth,
+          waveFreqX: 0.35 + Math.random() * 0.55,
+          waveFreqY: 0.3 + Math.random() * 0.5,
+          phaseX: Math.random() * Math.PI * 2,
+          phaseY: Math.random() * Math.PI * 2,
+          breathPhase: Math.random() * Math.PI * 2,
+          breathSpeed: 0.9 + Math.random() * 1.2,
+          baseRadius: (1.7 + Math.random() * 2.3) * depth,
+          swirlDir: Math.random() < 0.5 ? 1 : -1,
+          // Spring-damping offset & velocity relative to equilibrium
+          ox: 0,
+          oy: 0,
+          vx: 0,
+          vy: 0,
+          // Current rendered screen position
+          x: 0,
+          y: 0,
+          influence: 0
+        };
+      }
+
+      function resizeCanvas() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        bgCanvas.width = Math.floor(width * dpr);
+        bgCanvas.height = Math.floor(height * dpr);
+        bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+        const targetCount = getParticleCount();
+        while (particles.length < targetCount) {
+          particles.push(createParticle(particles.length));
+        }
+        if (particles.length > targetCount) {
+          particles.length = targetCount;
+        }
+      }
+
+      function updatePointer(clientX, clientY, snapIfInactive) {
+        pointer.targetX = clientX;
+        pointer.targetY = clientY;
+        if (snapIfInactive && !pointer.active) {
+          pointer.x = clientX;
+          pointer.y = clientY;
+        }
+        pointer.active = true;
+      }
+
+      // Window-level listeners keep <canvas> completely pointer-events: none
+      window.addEventListener('pointermove', (e) => {
+        updatePointer(e.clientX, e.clientY, true);
+      }, { passive: true });
+
+      window.addEventListener('mousemove', (e) => {
+        updatePointer(e.clientX, e.clientY, true);
+      }, { passive: true });
+
+      window.addEventListener('touchstart', (e) => {
+        if (e.touches.length > 0) {
+          updatePointer(e.touches[0].clientX, e.touches[0].clientY, true);
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchmove', (e) => {
+        if (e.touches.length > 0) {
+          updatePointer(e.touches[0].clientX, e.touches[0].clientY, false);
+        }
+      }, { passive: true });
+
+      window.addEventListener('touchend', () => {
+        pointer.active = false;
+      }, { passive: true });
+
+      document.addEventListener('mouseleave', () => {
+        pointer.active = false;
+      });
+
+      window.addEventListener('blur', () => {
+        pointer.active = false;
+      });
+
+      window.addEventListener('scroll', () => {
+        scrollY = window.scrollY || 0;
+      }, { passive: true });
+
+      window.addEventListener('resize', resizeCanvas);
+
+      function renderFrame(now) {
+        requestAnimationFrame(renderFrame);
+
+        if (document.hidden || (typeof gameState !== 'undefined' && gameState.gameStarted)) {
+          lastTime = now;
+          return;
+        }
+
+        const dt = Math.min((now - lastTime) / 1000, 0.05);
+        lastTime = now;
+        const motionScale = prefersReducedMotion ? 0.2 : 1;
+        elapsed += dt * motionScale;
+
+        smoothScrollY += (scrollY - smoothScrollY) * Math.min(1, dt * 8);
+        pointer.strength += ((pointer.active ? 1 : 0) - pointer.strength) * Math.min(1, dt * 6);
+        if (pointer.active) {
+          pointer.x += (pointer.targetX - pointer.x) * Math.min(1, dt * 16);
+          pointer.y += (pointer.targetY - pointer.y) * Math.min(1, dt * 16);
+        }
+
+        const isDark = document.documentElement.classList.contains('dark');
+        const palette = isDark ? PALETTES.dark : PALETTES.light;
+
+        bgCtx.clearRect(0, 0, width, height);
+
+        // Breathing cursor halo — shrinks smoothly until it disappears when crashing into any panel edge
+        const breath = Math.sin(elapsed * 2.2);
+        const baseHaloRadius = (165 + breath * 16) * (0.85 + 0.15 * pointer.strength);
+        const minPanelDist = pointer.strength > 0.005
+          ? getMinDistanceToPanel(pointer.x, pointer.y, baseHaloRadius)
+          : baseHaloRadius;
+        const targetPanelScale = Math.max(0, Math.min(1, minPanelDist / Math.max(baseHaloRadius, 1)));
+
+        if (targetPanelScale < pointer.panelScale) {
+          // Compress immediately against the panel edge so the light never bleeds under it
+          pointer.panelScale = targetPanelScale;
+        } else {
+          pointer.panelScale += (targetPanelScale - pointer.panelScale) * Math.min(1, dt * 14);
+        }
+
+        const haloRadius = baseHaloRadius * pointer.panelScale;
+        const haloStrength = pointer.strength * Math.pow(pointer.panelScale, 0.65);
+        const fieldStrength = pointer.strength * pointer.panelScale;
+
+        if (haloStrength > 0.01 && haloRadius > 1.5) {
+          const innerRadius = Math.min(4, haloRadius * 0.15);
+          const grad = bgCtx.createRadialGradient(
+            pointer.x, pointer.y, innerRadius,
+            pointer.x, pointer.y, haloRadius
+          );
+          if (isDark) {
+            grad.addColorStop(0, `rgba(16, 185, 129, ${(0.18 + 0.04 * breath) * haloStrength})`);
+            grad.addColorStop(0.4, `rgba(99, 102, 241, ${(0.1 + 0.025 * breath) * haloStrength})`);
+            grad.addColorStop(0.75, `rgba(34, 211, 238, ${0.04 * haloStrength})`);
+            grad.addColorStop(1, 'rgba(11, 15, 23, 0)');
+          } else {
+            grad.addColorStop(0, `rgba(16, 185, 129, ${(0.14 + 0.03 * breath) * haloStrength})`);
+            grad.addColorStop(0.42, `rgba(79, 70, 229, ${(0.08 + 0.02 * breath) * haloStrength})`);
+            grad.addColorStop(0.76, `rgba(6, 182, 212, ${0.035 * haloStrength})`);
+            grad.addColorStop(1, 'rgba(250, 249, 246, 0)');
+          }
+
+          bgCtx.fillStyle = grad;
+          bgCtx.beginPath();
+          bgCtx.arc(pointer.x, pointer.y, haloRadius, 0, Math.PI * 2);
+          bgCtx.fill();
+
+          // Subtle breathing inner halo ring — compresses & disappears with the halo at panel edges
+          const baseRingRadius = 40 + breath * 6;
+          const ringRadius = Math.min(baseRingRadius, haloRadius * 0.85);
+          if (ringRadius > 1.2) {
+            bgCtx.beginPath();
+            bgCtx.arc(pointer.x, pointer.y, ringRadius, 0, Math.PI * 2);
+            bgCtx.strokeStyle = isDark
+              ? `rgba(52, 211, 153, ${0.2 * haloStrength})`
+              : `rgba(16, 185, 129, ${0.22 * haloStrength})`;
+            bgCtx.lineWidth = 1.1;
+            bgCtx.stroke();
+          }
+        }
+
+        // Spring-damping & repulsion/swirl constants
+        const interactionRadius = 185;
+        const springK = 18;
+        const damping = Math.pow(0.06, dt);
+        const margin = 40;
+        const normMouseX = pointer.active ? (pointer.x / Math.max(width, 1) - 0.5) : 0;
+        const normMouseY = pointer.active ? (pointer.y / Math.max(height, 1) - 0.5) : 0;
+
+        const activeNearby = [];
+
+        // 1. Update floating drift, sinusoidal wave, depth parallax, and spring-damping physics
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+
+          p.baseX += p.driftX * dt * motionScale;
+          p.baseY += p.driftY * dt * motionScale;
+
+          if (p.baseX < -margin) p.baseX = width + margin;
+          if (p.baseX > width + margin) p.baseX = -margin;
+          if (p.baseY < -margin) p.baseY = height + margin;
+          if (p.baseY > height + margin) p.baseY = -margin;
+
+          const waveX = Math.sin(elapsed * p.waveFreqX + p.phaseX) * p.waveAmpX;
+          const waveY = Math.cos(elapsed * p.waveFreqY + p.phaseY) * p.waveAmpY;
+          const scrollOffsetY = -(smoothScrollY * (0.06 + 0.14 * p.depth)) % (height + margin * 2);
+          const parallaxX = -normMouseX * 20 * p.depth * pointer.strength;
+          const parallaxY = -normMouseY * 16 * p.depth * pointer.strength;
+
+          const eqX = p.baseX + waveX + parallaxX;
+          const spanY = height + margin * 2;
+          const eqY = ((((p.baseY + waveY + scrollOffsetY + parallaxY + margin) % spanY) + spanY) % spanY) - margin;
+
+          const curX = eqX + p.ox;
+          const curY = eqY + p.oy;
+
+          // Spring force restoring particle to equilibrium
+          let ax = -springK * p.ox;
+          let ay = -springK * p.oy;
+          p.influence = 0;
+
+          // Cursor Gravity / Repulsion + Swirl Field
+          if (fieldStrength > 0.02 && !prefersReducedMotion) {
+            const dx = curX - pointer.x;
+            const dy = curY - pointer.y;
+            const distSq = dx * dx + dy * dy;
+            const localRadius = interactionRadius * (0.8 + 0.35 * p.depth) * (0.35 + 0.65 * pointer.panelScale);
+
+            if (distSq < localRadius * localRadius && distSq > 0.01) {
+              const dist = Math.sqrt(distSq);
+              const falloff = 1 - dist / localRadius;
+              const smoothFalloff = falloff * falloff;
+              const nx = dx / dist;
+              const ny = dy / dist;
+
+              const repelMag = 580 * smoothFalloff * p.depth * fieldStrength;
+              const swirlMag = 240 * smoothFalloff * p.depth * fieldStrength * p.swirlDir;
+
+              ax += nx * repelMag - ny * swirlMag;
+              ay += ny * repelMag + nx * swirlMag;
+              p.influence = falloff * fieldStrength;
+            }
+          }
+
+          // Velocity integration + damping
+          p.vx = (p.vx + ax * dt) * damping;
+          p.vy = (p.vy + ay * dt) * damping;
+          p.ox += p.vx * dt;
+          p.oy += p.vy * dt;
+
+          const maxOffset = 150;
+          const offMagSq = p.ox * p.ox + p.oy * p.oy;
+          if (offMagSq > maxOffset * maxOffset) {
+            const scale = maxOffset / Math.sqrt(offMagSq);
+            p.ox *= scale;
+            p.oy *= scale;
+          }
+
+          p.x = eqX + p.ox;
+          p.y = eqY + p.oy;
+
+          if (p.influence > 0.04) {
+            activeNearby.push(p);
+          }
+        }
+
+        // 2. Draw subtle connection lines inside cursor halo field
+        if (fieldStrength > 0.02 && activeNearby.length > 0) {
+          bgCtx.lineWidth = 1;
+
+          for (let i = 0; i < activeNearby.length; i++) {
+            const p = activeNearby[i];
+            const c = palette[p.colorIndex];
+            const lineAlpha = p.influence * (isDark ? 0.34 : 0.26);
+            bgCtx.strokeStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${lineAlpha})`;
+            bgCtx.beginPath();
+            bgCtx.moveTo(pointer.x, pointer.y);
+            bgCtx.lineTo(p.x, p.y);
+            bgCtx.stroke();
+          }
+
+          const pairMaxDist = 118;
+          const pairMaxDistSq = pairMaxDist * pairMaxDist;
+          for (let i = 0; i < activeNearby.length; i++) {
+            const a = activeNearby[i];
+            for (let j = i + 1; j < activeNearby.length; j++) {
+              const b = activeNearby[j];
+              const dx = a.x - b.x;
+              const dy = a.y - b.y;
+              const dSq = dx * dx + dy * dy;
+              if (dSq < pairMaxDistSq) {
+                const prox = 1 - Math.sqrt(dSq) / pairMaxDist;
+                const c = palette[a.colorIndex];
+                const alpha = prox * Math.min(a.influence, b.influence) * (isDark ? 0.4 : 0.3);
+                bgCtx.strokeStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${alpha})`;
+                bgCtx.beginPath();
+                bgCtx.moveTo(a.x, a.y);
+                bgCtx.lineTo(b.x, b.y);
+                bgCtx.stroke();
+              }
+            }
+          }
+        }
+
+        // 3. Draw colored micro-particles with organic breathing glow
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          const c = palette[p.colorIndex];
+          const pBreath = 0.85 + 0.15 * Math.sin(elapsed * p.breathSpeed + p.breathPhase);
+          const radius = p.baseRadius * pBreath * (1 + p.influence * 0.48);
+          const baseAlpha = isDark ? (0.36 + 0.4 * p.depth) : (0.32 + 0.36 * p.depth);
+          const alpha = Math.min(0.95, (baseAlpha + p.influence * 0.32) * pBreath);
+
+          if (p.depth > 0.6 || p.influence > 0.12) {
+            const glowR = radius * (2.8 + p.influence * 1.5);
+            const pGrad = bgCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, glowR);
+            pGrad.addColorStop(0, `rgba(${c.r}, ${c.g}, ${c.b}, ${alpha * (isDark ? 0.5 : 0.32)})`);
+            pGrad.addColorStop(1, `rgba(${c.r}, ${c.g}, ${c.b}, 0)`);
+            bgCtx.fillStyle = pGrad;
+            bgCtx.beginPath();
+            bgCtx.arc(p.x, p.y, glowR, 0, Math.PI * 2);
+            bgCtx.fill();
+          }
+
+          bgCtx.fillStyle = `rgba(${c.r}, ${c.g}, ${c.b}, ${alpha})`;
+          bgCtx.beginPath();
+          bgCtx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+          bgCtx.fill();
+        }
+      }
+
+      resizeCanvas();
+      requestAnimationFrame(renderFrame);
+    })();
+  </script>
+</body>
+
+</html>
