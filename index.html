@@ -824,7 +824,7 @@
               now connected to its interactive web interface.
             </p>
 
-            <!-- Interactive View Switcher (Live App + Architecture + Code) -->
+            <!-- Interactive View Switcher (Live App + Architecture + C++ Console Mirror & Inspector + Code) -->
             <div
               class="rounded-xl border border-borderLight dark:border-borderDark bg-paper dark:bg-paper-dark overflow-hidden">
               <div
@@ -839,6 +839,9 @@
                     class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">.h
                     /
                     .cpp Architecture</button>
+                  <button type="button" onclick="switchProjectView('enf', 'inspector')" id="enf-btn-inspector"
+                    class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">C++
+                    Console Mirror &amp; Inspector</button>
                   <button type="button" onclick="switchProjectView('enf', 'code')" id="enf-btn-code"
                     class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">Turn
                     Engine Logic</button>
@@ -883,7 +886,73 @@
                       interface</span></div>
                 </div>
 
-                <!-- View 2: Code -->
+                <!-- View 2: C++ Console Mirror & Inspector -->
+                <div id="enf-view-inspector" class="hidden space-y-4">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2.5">
+                      <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-xs">## /</span>
+                      <h4 class="font-sans text-sm sm:text-base font-bold tracking-tight text-ink dark:text-ink-dark">
+                        C++ console mirror &amp; inspector
+                      </h4>
+                    </div>
+                    <button type="button" onclick="copyEnfConsoleOutput()"
+                      class="px-3 py-1.5 rounded-lg border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark hover:border-emerald-500/50 font-mono text-xs text-ink dark:text-ink-dark transition-colors">
+                      Copy Console Output
+                    </button>
+                  </div>
+
+                  <div
+                    class="rounded-2xl border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark overflow-hidden shadow-sm">
+                    <!-- Top Switcher Bar -->
+                    <div
+                      class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-paper/70 dark:bg-paper-dark/60 border-b border-borderLight dark:border-borderDark">
+                      <div class="flex flex-wrap items-center gap-1.5 font-mono text-xs">
+                        <button type="button" onclick="switchEnfInspectorTab('output')" id="enf-insp-btn-output"
+                          class="px-3 py-1.5 rounded-lg bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 border border-borderLight dark:border-borderDark shadow-xs">Live
+                          Console Output</button>
+                        <button type="button" onclick="switchEnfInspectorTab('audit')" id="enf-insp-btn-audit"
+                          class="px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors">Turn-by-Turn
+                          Audit</button>
+                        <button type="button" onclick="switchEnfInspectorTab('arch')" id="enf-insp-btn-arch"
+                          class="px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors">.h
+                          / .cpp Architecture</button>
+                      </div>
+                      <span class="font-mono text-[10px] text-muted dark:text-muted-dark uppercase tracking-wider">
+                        Game-EnfrenDados
+                      </span>
+                    </div>
+
+                    <!-- Panel Body -->
+                    <div
+                      class="p-5 bg-paper dark:bg-paper-dark font-mono text-xs leading-relaxed overflow-x-auto max-h-[420px] overflow-y-auto">
+                      <!-- View 1: Live Console Output -->
+                      <pre id="enf-insp-view-output"
+                        class="text-emerald-700 dark:text-emerald-400 whitespace-pre overflow-x-auto tabular-nums"></pre>
+
+                      <!-- View 2: Turn-by-Turn Audit -->
+                      <div id="enf-insp-view-audit" class="hidden space-y-2.5 text-slate-700 dark:text-slate-300"></div>
+
+                      <!-- View 3: Architecture Tree -->
+                      <div id="enf-insp-view-arch" class="hidden text-slate-700 dark:text-slate-300 space-y-1.5">
+                        <div class="text-emerald-600 dark:text-emerald-400 font-bold">Game-EnfrenDados/</div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">main.cpp</span> <span
+                            class="text-muted dark:text-muted-dark">// Interactive console loop: (1) Jugar, (2) Reglas, (3) Creditos, (4) Estadisticas, (0) Salir</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">funciones.h</span> <span
+                            class="text-muted dark:text-muted-dark">// Declarations: Menu, Jugar, tiradaDado6Caras, tiradaDado12Caras, quienComienza, jugarRonda, Creditos, Reglas, Estadisticas</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">funciones.cpp</span> <span
+                            class="text-muted dark:text-muted-dark">// Core game loop, 3-round scoring, D12 target, D6 stock transfer, +10,000 auto-win, rlutil ASCII banners</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">rlutil.h</span> <span
+                            class="text-muted dark:text-muted-dark">// Cross-platform terminal color utilities (Tapio Vierros)</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">EnfrenDados.cbp</span> <span
+                            class="text-muted dark:text-muted-dark">// Code::Blocks GCC project configuration</span></div>
+                        <div>└── <span class="text-emerald-600 dark:text-emerald-400 font-semibold">index.html</span> <span
+                            class="text-muted dark:text-muted-dark">// Reactive HTML interface using the exact portfolio editorial color-set &amp; particle halo</span></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- View 3: Code -->
                 <div id="enf-view-code" class="hidden text-slate-800 dark:text-slate-200 space-y-1">
                   <div class="text-purple-600 dark:text-purple-400">// Turn resolution &amp; +10,000 automatic victory
                     check (funciones.cpp)</div>
@@ -1483,9 +1552,13 @@
       if (frame) {
         frame.addEventListener('load', () => {
           syncCalcIframesTheme();
-          if ((id === 'calc-live-iframe' || id === 'calc-modal-iframe') && frame.contentWindow) {
+          if (frame.contentWindow) {
             try {
-              frame.contentWindow.postMessage({ type: 'calc-inspector-request' }, '*');
+              if (id === 'calc-live-iframe' || id === 'calc-modal-iframe') {
+                frame.contentWindow.postMessage({ type: 'calc-inspector-request' }, '*');
+              } else if (id === 'enf-live-iframe' || id === 'enf-modal-iframe') {
+                frame.contentWindow.postMessage({ type: 'enf-inspector-request' }, '*');
+              }
             } catch (e) { /* ignore cross-origin/file restrictions */ }
           }
         });
@@ -1834,6 +1907,87 @@
         }
         if (typeof event.data.formulasHtml === 'string') {
           formulasEl.innerHTML = event.data.formulasHtml;
+        }
+        requestAnimationFrame(syncProjectViewportHeight);
+      });
+    })();
+
+    function switchEnfInspectorTab(tab) {
+      ['output', 'audit', 'arch'].forEach(key => {
+        const view = document.getElementById(`enf-insp-view-${key}`);
+        const btn = document.getElementById(`enf-insp-btn-${key}`);
+        if (!view || !btn) return;
+        if (key === tab) {
+          view.classList.remove('hidden');
+          btn.className = 'px-3 py-1.5 rounded-lg bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 border border-borderLight dark:border-borderDark shadow-xs';
+        } else {
+          view.classList.add('hidden');
+          btn.className = 'px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors';
+        }
+      });
+      requestAnimationFrame(syncProjectViewportHeight);
+    }
+
+    function copyEnfConsoleOutput() {
+      const outputEl = document.getElementById('enf-insp-view-output');
+      if (!outputEl) return;
+      const text = outputEl.textContent || '';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast('Console output copied!')).catch(() => {
+          const el = document.createElement('textarea');
+          el.value = text;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+          showToast('Console output copied!');
+        });
+      } else {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Console output copied!');
+      }
+    }
+
+    (function initEnfInspector() {
+      const outputEl = document.getElementById('enf-insp-view-output');
+      const auditEl = document.getElementById('enf-insp-view-audit');
+      if (!outputEl || !auditEl) return;
+
+      const defaultBanner = `____________________________________        ________________________________________________
+  _______  __    _  ______  _______ \\      / ______   _    _   ____    / _ \\             +
+  \\  ____\\ \\ \\  / \\ \\   __\\ \\  ___ \\ \\    / /  ____/ / \\  / / / __ \\  (_( ) ) _|_     |
+   \\ \\___   \\ \\/   \\ \\ \\__   \\ \\__\\ \\ \\  / / /__    /   \\/ / / / / / / / / /   |   ___|___
+    \\  __\\   \\      \\ \\  _\\   \\  _  /  \\/ /  __/   /      / / / / / / /_/ /           |
+     \\ \\_____ \\   /\\ \\ \\ \\     \\ \\ \\ \\   / /____  / /\\   / / /_/ / / _ / (__      +   |
+      \\______\\ \\_/  \\_\\ \\_\\     \\_\\ \\_\\ /______/ /_/  \\_/ |_____/ /_/ |____/      _|_
+                                                                                   |
+---------------------------- E N F R E N D A D O S ----------------------
+-------------------------------------------------------------------------
+                               1 = JUGAR
+             2 = REGLAS                            3 = CREDITOS
+                                4 = ESTADISTICAS
+-------------------------------------------------------------------------
+0 = SALIR`;
+
+      outputEl.textContent = defaultBanner;
+      auditEl.innerHTML = `<div class="text-muted dark:text-muted-dark italic">No completed turns in this match yet.</div>`;
+
+      // Stay live-synced whenever the embedded EnfrenDados iframe logs turns or audit updates
+      window.addEventListener('message', (event) => {
+        if (!event.data || event.data.type !== 'enf-inspector-sync') return;
+        if (typeof event.data.consoleOutput === 'string') {
+          outputEl.textContent = event.data.consoleOutput;
+          if (outputEl.parentElement) {
+            outputEl.parentElement.scrollTop = outputEl.parentElement.scrollHeight;
+          }
+        }
+        if (typeof event.data.auditHtml === 'string') {
+          auditEl.innerHTML = event.data.auditHtml;
         }
         requestAnimationFrame(syncProjectViewportHeight);
       });
