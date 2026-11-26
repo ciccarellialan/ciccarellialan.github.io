@@ -132,63 +132,14 @@
       -webkit-backdrop-filter: blur(12px);
     }
 
-    /* Project Panel Range Slider */
-    .project-range-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      height: 6px;
-      border-radius: 9999px;
-      outline: none;
-      cursor: pointer;
-    }
-
-    .project-range-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 18px;
-      height: 18px;
-      border-radius: 9999px;
-      background: #10b981;
-      border: 2px solid #ffffff;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
-      cursor: grab;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .dark .project-range-slider::-webkit-slider-thumb {
-      border-color: #111726;
-    }
-
-    .project-range-slider::-webkit-slider-thumb:hover {
-      transform: scale(1.15);
-      box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
-    }
-
-    .project-range-slider::-webkit-slider-thumb:active {
-      cursor: grabbing;
-      transform: scale(1.08);
-    }
-
-    .project-range-slider::-moz-range-thumb {
-      width: 18px;
-      height: 18px;
-      border-radius: 9999px;
-      background: #10b981;
-      border: 2px solid #ffffff;
-      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.4);
-      cursor: grab;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-
-    .dark .project-range-slider::-moz-range-thumb {
-      border-color: #111726;
-    }
-
     /* Scroll-to-bottom Floating Arrow */
     @keyframes subtleChevronFloat {
-      0%, 100% {
+
+      0%,
+      100% {
         transform: translateY(0);
       }
+
       50% {
         transform: translateY(3px);
       }
@@ -651,29 +602,37 @@
                         class="text-emerald-700 dark:text-emerald-400 whitespace-pre overflow-x-auto tabular-nums"></pre>
 
                       <!-- View 2: Step-by-Step Math Formulas -->
-                      <div id="calc-insp-view-formulas" class="hidden space-y-4 text-slate-700 dark:text-slate-300"></div>
+                      <div id="calc-insp-view-formulas" class="hidden space-y-4 text-slate-700 dark:text-slate-300">
+                      </div>
 
                       <!-- View 3: Architecture Tree -->
                       <div id="calc-insp-view-arch" class="hidden text-slate-700 dark:text-slate-300 space-y-1.5">
-                        <div class="text-emerald-600 dark:text-emerald-400 font-bold">Descriptive-Statistics-Calculator/</div>
+                        <div class="text-emerald-600 dark:text-emerald-400 font-bold">Descriptive-Statistics-Calculator/
+                        </div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">main.cpp</span> <span
-                            class="text-muted dark:text-muted-dark">// Interactive console loop: (1) Datos individuales, (2)
+                            class="text-muted dark:text-muted-dark">// Interactive console loop: (1) Datos individuales,
+                            (2)
                             Cálculo de intervalos, (3) Salir</span></div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">comun.h</span> <span
-                            class="text-muted dark:text-muted-dark">// Shared structs: MedidasDeTendencia, MedidasDeDispersion,
+                            class="text-muted dark:text-muted-dark">// Shared structs: MedidasDeTendencia,
+                            MedidasDeDispersion,
                             DatosAgrupados</span></div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">comun.cpp</span> <span
                             class="text-muted dark:text-muted-dark">// Input validation (totalDatos, ingresarDatos),
                             pedirDecimales, calcularRango, interpretacionCV</span></div>
-                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">funciones.h / funciones.cpp</span> <span
-                            class="text-muted dark:text-muted-dark">// Mode 1: Ungrouped individual data statistics, frequency
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">funciones.h /
+                            funciones.cpp</span> <span class="text-muted dark:text-muted-dark">// Mode 1: Ungrouped
+                            individual data statistics, frequency
                             table &amp; bar chart</span></div>
-                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">intervalos.h / intervalos.cpp</span>
-                          <span class="text-muted dark:text-muted-dark">// Mode 2: Sturges' rule, class intervals, class marks,
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">intervalos.h /
+                            intervalos.cpp</span>
+                          <span class="text-muted dark:text-muted-dark">// Mode 2: Sturges' rule, class intervals, class
+                            marks,
                             grouped mean/median/mode, variance &amp; ASCII histogram</span>
                         </div>
-                        <div>└── <span class="text-emerald-600 dark:text-emerald-400 font-semibold">index.html</span> <span
-                            class="text-muted dark:text-muted-dark">// Full reactive web interface using the exact portfolio
+                        <div>└── <span class="text-emerald-600 dark:text-emerald-400 font-semibold">index.html</span>
+                          <span class="text-muted dark:text-muted-dark">// Full reactive web interface using the exact
+                            portfolio
                             editorial color-set</span></div>
                       </div>
                     </div>
@@ -796,8 +755,7 @@
               </div>
 
               <div class="flex flex-wrap items-center gap-2.5 shrink-0">
-                <a href="https://ciccarellialan.github.io/Game-EnfrenDados-Web/" target="_blank"
-                  rel="noopener"
+                <a href="https://ciccarellialan.github.io/Game-EnfrenDados-Web/" target="_blank" rel="noopener"
                   class="px-3.5 py-1.5 rounded-lg bg-emerald-500 text-white font-mono text-xs font-semibold hover:bg-emerald-600 transition-colors flex items-center gap-1.5 shadow-xs">
                   <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
                   <span>Live Interface</span>
@@ -852,8 +810,7 @@
                     title="Expand live EnfrenDados interface to fullscreen">
                     ⤢ Expand
                   </button>
-                  <a href="https://ciccarellialan.github.io/Game-EnfrenDados-Web/" target="_blank"
-                    rel="noopener"
+                  <a href="https://ciccarellialan.github.io/Game-EnfrenDados-Web/" target="_blank" rel="noopener"
                     class="px-2 py-1 rounded border border-borderLight dark:border-borderDark bg-card/70 dark:bg-card-dark/70 text-emerald-600 dark:text-emerald-400 hover:border-emerald-500/50 transition-colors font-semibold">
                     Open ↗
                   </a>
@@ -862,8 +819,7 @@
 
               <!-- View 0: Live Embedded Web Interface -->
               <div id="enf-view-live" class="relative bg-paper dark:bg-paper-dark">
-                <iframe id="enf-live-iframe"
-                  src="https://ciccarellialan.github.io/Game-EnfrenDados-Web/"
+                <iframe id="enf-live-iframe" src="https://ciccarellialan.github.io/Game-EnfrenDados-Web/"
                   title="EnfrenDados — Live Interactive Dice Game Interface"
                   class="w-full h-[680px] sm:h-[740px] border-0 block bg-paper dark:bg-paper-dark"
                   loading="lazy"></iframe>
@@ -936,17 +892,23 @@
                       <div id="enf-insp-view-arch" class="hidden text-slate-700 dark:text-slate-300 space-y-1.5">
                         <div class="text-emerald-600 dark:text-emerald-400 font-bold">Game-EnfrenDados/</div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">main.cpp</span> <span
-                            class="text-muted dark:text-muted-dark">// Interactive console loop: (1) Jugar, (2) Reglas, (3) Creditos, (4) Estadisticas, (0) Salir</span></div>
+                            class="text-muted dark:text-muted-dark">// Interactive console loop: (1) Jugar, (2) Reglas,
+                            (3) Creditos, (4) Estadisticas, (0) Salir</span></div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">funciones.h</span> <span
-                            class="text-muted dark:text-muted-dark">// Declarations: Menu, Jugar, tiradaDado6Caras, tiradaDado12Caras, quienComienza, jugarRonda, Creditos, Reglas, Estadisticas</span></div>
+                            class="text-muted dark:text-muted-dark">// Declarations: Menu, Jugar, tiradaDado6Caras,
+                            tiradaDado12Caras, quienComienza, jugarRonda, Creditos, Reglas, Estadisticas</span></div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">funciones.cpp</span> <span
-                            class="text-muted dark:text-muted-dark">// Core game loop, 3-round scoring, D12 target, D6 stock transfer, +10,000 auto-win, rlutil ASCII banners</span></div>
+                            class="text-muted dark:text-muted-dark">// Core game loop, 3-round scoring, D12 target, D6
+                            stock transfer, +10,000 auto-win, rlutil ASCII banners</span></div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">rlutil.h</span> <span
-                            class="text-muted dark:text-muted-dark">// Cross-platform terminal color utilities (Tapio Vierros)</span></div>
+                            class="text-muted dark:text-muted-dark">// Cross-platform terminal color utilities (Tapio
+                            Vierros)</span></div>
                         <div>├── <span class="text-ink dark:text-ink-dark font-semibold">EnfrenDados.cbp</span> <span
-                            class="text-muted dark:text-muted-dark">// Code::Blocks GCC project configuration</span></div>
-                        <div>└── <span class="text-emerald-600 dark:text-emerald-400 font-semibold">index.html</span> <span
-                            class="text-muted dark:text-muted-dark">// Reactive HTML interface using the exact portfolio editorial color-set &amp; particle halo</span></div>
+                            class="text-muted dark:text-muted-dark">// Code::Blocks GCC project configuration</span>
+                        </div>
+                        <div>└── <span class="text-emerald-600 dark:text-emerald-400 font-semibold">index.html</span>
+                          <span class="text-muted dark:text-muted-dark">// Reactive HTML interface using the exact
+                            portfolio editorial color-set &amp; particle halo</span></div>
                       </div>
                     </div>
                   </div>
@@ -974,31 +936,6 @@
             </div>
           </article>
 
-        </div>
-      </div>
-
-      <!-- Panel Bottom Bar: Interactive Range Slider & Indicators -->
-      <div
-        class="px-6 py-4 bg-paper/70 dark:bg-paper-dark/60 border-t border-borderLight dark:border-borderDark flex flex-col gap-3">
-        <div class="flex items-center gap-4">
-          <span class="font-mono text-[11px] text-muted dark:text-muted-dark uppercase tracking-wider shrink-0">Slide
-            Project</span>
-          <input id="project-range-slider" type="range" min="0" max="2" step="1" value="0"
-            aria-label="Select project slide" class="project-range-slider w-full bg-borderLight dark:bg-borderDark" />
-        </div>
-        <div class="flex items-center justify-between font-mono text-[11px] text-muted dark:text-muted-dark">
-          <button type="button" onclick="goToProjectSlide(0)" id="project-label-0"
-            class="text-emerald-600 dark:text-emerald-400 font-semibold transition-colors text-left">
-            #1 Estadística
-          </button>
-          <button type="button" onclick="goToProjectSlide(1)" id="project-label-1"
-            class="hover:text-ink dark:hover:text-ink-dark transition-colors text-center">
-            #2 Challenges
-          </button>
-          <button type="button" onclick="goToProjectSlide(2)" id="project-label-2"
-            class="hover:text-ink dark:hover:text-ink-dark transition-colors text-right">
-            #3 EnfrenDados
-          </button>
         </div>
       </div>
 
@@ -1289,6 +1226,29 @@
     </svg>
   </a>
 
+  <!-- Project Panel Floating Side Arrows (Prev / Next Project) -->
+  <button type="button" id="project-side-prev" onclick="prevProjectSlideFromSide()"
+    aria-label="Previous project" title="Previous project"
+    style="left: max(0.75rem, calc(50% - 34.5rem));"
+    class="fixed top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full flex items-center justify-center bg-ink/10 hover:bg-ink/15 dark:bg-white/10 dark:hover:bg-white/15 text-ink dark:text-slate-200 border border-ink/10 dark:border-white/10 hover:border-emerald-500/40 dark:hover:border-emerald-400/40 backdrop-blur-md shadow-lg transition-[opacity,transform,background-color,border-color] duration-300 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 opacity-0 pointer-events-none -translate-x-2 group">
+    <svg class="w-5 h-5 transition-transform duration-300 group-hover:-translate-x-0.5" fill="none"
+      stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+      aria-hidden="true">
+      <path d="M14.5 6.5L9 12l5.5 5.5"></path>
+    </svg>
+  </button>
+
+  <button type="button" id="project-side-next" onclick="nextProjectSlideFromSide()"
+    aria-label="Next project" title="Next project"
+    style="right: max(0.75rem, calc(50% - 34.5rem));"
+    class="fixed top-1/2 -translate-y-1/2 z-30 w-12 h-12 rounded-full flex items-center justify-center bg-ink/10 hover:bg-ink/15 dark:bg-white/10 dark:hover:bg-white/15 text-ink dark:text-slate-200 border border-ink/10 dark:border-white/10 hover:border-emerald-500/40 dark:hover:border-emerald-400/40 backdrop-blur-md shadow-lg transition-[opacity,transform,background-color,border-color] duration-300 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 opacity-0 pointer-events-none translate-x-2 group">
+    <svg class="w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" fill="none"
+      stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+      aria-hidden="true">
+      <path d="M9.5 6.5L15 12l-5.5 5.5"></path>
+    </svg>
+  </button>
+
   <!-- Toast Notification -->
   <div id="toast"
     class="fixed bottom-6 right-6 z-50 bg-ink dark:bg-ink-dark text-paper dark:text-paper-dark px-4 py-3 rounded-xl font-mono text-xs font-semibold shadow-xl translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-2">
@@ -1365,8 +1325,7 @@
         <span class="hidden sm:inline text-muted dark:text-muted-dark">/ Live Interactive Dice Game</span>
       </div>
       <div class="flex items-center gap-2">
-        <a href="https://ciccarellialan.github.io/Game-EnfrenDados-Web/" target="_blank"
-          rel="noopener"
+        <a href="https://ciccarellialan.github.io/Game-EnfrenDados-Web/" target="_blank" rel="noopener"
           class="px-3 py-1.5 rounded-lg border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark text-emerald-600 dark:text-emerald-400 hover:border-emerald-500/50 transition-colors font-semibold">
           Open in New Tab ↗
         </a>
@@ -1489,6 +1448,36 @@
         scrollToBottomBtn.classList.toggle('opacity-0', atBottom);
         scrollToBottomBtn.classList.toggle('pointer-events-none', atBottom);
         scrollToBottomBtn.classList.toggle('translate-y-3', atBottom);
+      }
+
+      const projectPanel = document.getElementById('projects-slider-panel');
+      const sidePrevBtn = document.getElementById('project-side-prev');
+      const sideNextBtn = document.getElementById('project-side-next');
+      if (projectPanel && sidePrevBtn && sideNextBtn) {
+        const rect = projectPanel.getBoundingClientRect();
+        const arrowHalfHeight = (sidePrevBtn.offsetHeight || 48) / 2;
+        const viewportMid = window.innerHeight / 2;
+        const headerEl = document.querySelector('header');
+        const headerOffset = headerEl ? headerEl.offsetHeight : 64;
+
+        const minBottomLimit = rect.height >= viewportMid
+          ? viewportMid + arrowHalfHeight
+          : Math.min(viewportMid + arrowHalfHeight, headerOffset + arrowHalfHeight * 2 + 48);
+
+        const panelInView = rect.top <= viewportMid - arrowHalfHeight && rect.bottom >= minBottomLimit;
+        const clampedTop = Math.max(
+          rect.top + arrowHalfHeight,
+          Math.min(viewportMid, rect.bottom - arrowHalfHeight)
+        );
+        sidePrevBtn.style.top = `${clampedTop}px`;
+        sideNextBtn.style.top = `${clampedTop}px`;
+
+        sidePrevBtn.classList.toggle('opacity-0', !panelInView);
+        sidePrevBtn.classList.toggle('pointer-events-none', !panelInView);
+        sidePrevBtn.classList.toggle('-translate-x-2', !panelInView);
+        sideNextBtn.classList.toggle('opacity-0', !panelInView);
+        sideNextBtn.classList.toggle('pointer-events-none', !panelInView);
+        sideNextBtn.classList.toggle('translate-x-2', !panelInView);
       }
     }
 
@@ -1627,6 +1616,11 @@
        ======================================================== */
     let currentProjectSlide = 0;
     const totalProjectSlides = 3;
+    const projectSlideNames = [
+      'Descriptive Statistics Calculator',
+      'The Programming Challenges',
+      'EnfrenDados'
+    ];
 
     function syncProjectViewportHeight() {
       const viewport = document.getElementById('projects-slider-viewport');
@@ -1634,15 +1628,9 @@
       if (viewport && activeSlide) {
         viewport.style.height = activeSlide.offsetHeight + 'px';
       }
-    }
-
-    function updateProjectSliderTrackFill() {
-      const rangeSlider = document.getElementById('project-range-slider');
-      if (!rangeSlider) return;
-      const pct = (currentProjectSlide / (totalProjectSlides - 1)) * 100;
-      const isDark = document.documentElement.classList.contains('dark');
-      const restColor = isDark ? '#1f293d' : '#e5e5e0';
-      rangeSlider.style.background = `linear-gradient(to right, #10b981 0%, #10b981 ${pct}%, ${restColor} ${pct}%, ${restColor} 100%)`;
+      if (typeof updateScrollUI === 'function') {
+        updateScrollUI();
+      }
     }
 
     function goToProjectSlide(index) {
@@ -1658,15 +1646,8 @@
         counter.innerText = `0${currentProjectSlide + 1} / 0${totalProjectSlides}`;
       }
 
-      const rangeSlider = document.getElementById('project-range-slider');
-      if (rangeSlider) {
-        rangeSlider.value = currentProjectSlide;
-        updateProjectSliderTrackFill();
-      }
-
       for (let i = 0; i < totalProjectSlides; i++) {
         const tab = document.getElementById(`project-tab-${i}`);
-        const label = document.getElementById(`project-label-${i}`);
         if (tab) {
           if (i === currentProjectSlide) {
             tab.className = "px-3 py-1.5 rounded-lg bg-emerald-500 text-white font-semibold transition-all shadow-xs";
@@ -1674,14 +1655,17 @@
             tab.className = "px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:bg-black/5 dark:hover:bg-white/5 hover:text-ink dark:hover:text-ink-dark transition-all";
           }
         }
-        if (label) {
-          const alignClass = i === 0 ? 'text-left' : (i === 1 ? 'text-center' : 'text-right');
-          if (i === currentProjectSlide) {
-            label.className = `text-emerald-600 dark:text-emerald-400 font-semibold transition-colors ${alignClass}`;
-          } else {
-            label.className = `hover:text-ink dark:hover:text-ink-dark transition-colors ${alignClass}`;
-          }
-        }
+      }
+
+      const sidePrevBtn = document.getElementById('project-side-prev');
+      const sideNextBtn = document.getElementById('project-side-next');
+      if (sidePrevBtn && sideNextBtn) {
+        const prevIdx = (currentProjectSlide - 1 + totalProjectSlides) % totalProjectSlides;
+        const nextIdx = (currentProjectSlide + 1) % totalProjectSlides;
+        sidePrevBtn.title = `Previous project: ${projectSlideNames[prevIdx]} (← or A)`;
+        sidePrevBtn.setAttribute('aria-label', `Previous project: ${projectSlideNames[prevIdx]}`);
+        sideNextBtn.title = `Next project: ${projectSlideNames[nextIdx]} (→ or D)`;
+        sideNextBtn.setAttribute('aria-label', `Next project: ${projectSlideNames[nextIdx]}`);
       }
 
       requestAnimationFrame(syncProjectViewportHeight);
@@ -1695,27 +1679,88 @@
       goToProjectSlide(currentProjectSlide - 1);
     }
 
-    // Bind range slider, keyboard arrows, swipe gestures, and theme sync
-    (function initProjectsSlider() {
-      const rangeSlider = document.getElementById('project-range-slider');
-      if (rangeSlider) {
-        rangeSlider.addEventListener('input', (e) => {
-          goToProjectSlide(parseInt(e.target.value, 10));
-        });
-      }
+    function scrollToActiveProjectTitle() {
+      const activeSlide = document.querySelector(`[data-project-slide="${currentProjectSlide}"]`);
+      if (!activeSlide) return;
+      const titleEl = activeSlide.querySelector('h3') || activeSlide;
+      const headerEl = document.querySelector('header');
+      const headerOffset = headerEl ? headerEl.offsetHeight : 64;
+      const targetTop = Math.max(0, titleEl.getBoundingClientRect().top + window.scrollY - headerOffset - 48);
+      window.scrollTo({
+        top: targetTop,
+        behavior: 'smooth'
+      });
+    }
 
+    function prevProjectSlideFromSide() {
+      prevProjectSlide();
+      scrollToActiveProjectTitle();
+    }
+
+    function nextProjectSlideFromSide() {
+      nextProjectSlide();
+      scrollToActiveProjectTitle();
+    }
+
+    function pulseSideArrow(btn) {
+      if (!btn) return;
+      btn.classList.add('scale-95', 'border-emerald-500/60', 'dark:border-emerald-400/60');
+      clearTimeout(btn._pulseTimer);
+      btn._pulseTimer = setTimeout(() => {
+        btn.classList.remove('scale-95', 'border-emerald-500/60', 'dark:border-emerald-400/60');
+      }, 180);
+    }
+
+    // Bind keyboard shortcuts (A/D & ArrowLeft/ArrowRight) and swipe gestures
+    (function initProjectsSlider() {
       const sliderPanel = document.getElementById('projects-slider-panel');
-      if (sliderPanel) {
-        sliderPanel.addEventListener('keydown', (e) => {
-          if (e.key === 'ArrowRight') {
-            e.preventDefault();
-            nextProjectSlide();
-          } else if (e.key === 'ArrowLeft') {
-            e.preventDefault();
-            prevProjectSlide();
-          }
-        });
-      }
+      window.addEventListener('keydown', (e) => {
+        if (e.ctrlKey || e.metaKey || e.altKey) return;
+
+        const target = e.target;
+        if (
+          target &&
+          (target.tagName === 'INPUT' ||
+            target.tagName === 'TEXTAREA' ||
+            target.tagName === 'SELECT' ||
+            target.isContentEditable)
+        ) {
+          return;
+        }
+
+        // Do not hijack keys while any modal, drawer, or the arcade game is open
+        const gameOverlay = document.getElementById('game-overlay');
+        const calcModal = document.getElementById('calc-live-modal');
+        const enfModal = document.getElementById('enf-live-modal');
+        const drawer = document.getElementById('drawer');
+        const noteModal = document.getElementById('note-modal');
+        if (
+          (gameOverlay && !gameOverlay.classList.contains('hidden')) ||
+          (calcModal && !calcModal.classList.contains('hidden')) ||
+          (enfModal && !enfModal.classList.contains('hidden')) ||
+          (drawer && !drawer.classList.contains('translate-x-full')) ||
+          (noteModal && !noteModal.classList.contains('pointer-events-none'))
+        ) {
+          return;
+        }
+
+        const sidePrevBtn = document.getElementById('project-side-prev');
+        const sideNextBtn = document.getElementById('project-side-next');
+        const arrowsVisible = sidePrevBtn && !sidePrevBtn.classList.contains('pointer-events-none');
+        const panelFocused = sliderPanel && sliderPanel.contains(document.activeElement);
+        if (!arrowsVisible && !panelFocused) return;
+
+        const key = e.key;
+        if (key === 'ArrowLeft' || key === 'a' || key === 'A') {
+          e.preventDefault();
+          pulseSideArrow(sidePrevBtn);
+          prevProjectSlideFromSide();
+        } else if (key === 'ArrowRight' || key === 'd' || key === 'D') {
+          e.preventDefault();
+          pulseSideArrow(sideNextBtn);
+          nextProjectSlideFromSide();
+        }
+      });
 
       const viewport = document.getElementById('projects-slider-viewport');
       if (viewport) {
@@ -1734,7 +1779,6 @@
         }, { passive: true });
       }
 
-      themeToggleBtn.addEventListener('click', updateProjectSliderTrackFill);
       window.addEventListener('resize', syncProjectViewportHeight);
       if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(syncProjectViewportHeight);
