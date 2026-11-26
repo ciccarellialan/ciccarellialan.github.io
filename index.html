@@ -184,6 +184,26 @@
       border-color: #111726;
     }
 
+    /* Scroll-to-bottom Floating Arrow */
+    @keyframes subtleChevronFloat {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(3px);
+      }
+    }
+
+    .scroll-down-chevron {
+      animation: subtleChevronFloat 2.2s ease-in-out infinite;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-down-chevron {
+        animation: none;
+      }
+    }
+
     /* Keep page content above the fixed full-screen ambient cursor canvas */
     section,
     footer {
@@ -528,7 +548,7 @@
               functions and modular C++ components — now connected to its interactive web interface.
             </p>
 
-            <!-- 2-Panel Interactive View Switcher (Live App + Architecture) -->
+            <!-- 3-Panel Interactive View Switcher (Live App + Architecture + C++ Console Mirror & Inspector) -->
             <div
               class="rounded-xl border border-borderLight dark:border-borderDark bg-paper dark:bg-paper-dark overflow-hidden">
               <div
@@ -543,6 +563,9 @@
                     class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">.h
                     /
                     .cpp Architecture</button>
+                  <button type="button" onclick="switchProjectView('calc', 'inspector')" id="calc-btn-inspector"
+                    class="px-2.5 py-1 rounded text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark">C++
+                    Console Mirror &amp; Inspector</button>
                 </div>
                 <div class="flex items-center gap-2 font-mono text-[11px]">
                   <button type="button" onclick="openCalcModal()"
@@ -583,6 +606,78 @@
                       interfaces</span></div>
                   <div>└── frequency_table.cpp <span class="text-muted dark:text-muted-dark">// Frequency distribution &
                       ASCII bar render</span></div>
+                </div>
+
+                <!-- View 2: C++ Console Mirror & Inspector -->
+                <div id="calc-view-inspector" class="hidden space-y-4">
+                  <div class="flex flex-wrap items-center justify-between gap-3">
+                    <div class="flex items-center gap-2.5">
+                      <span class="font-mono text-emerald-600 dark:text-emerald-400 font-bold text-xs">## /</span>
+                      <h4 class="font-sans text-sm sm:text-base font-bold tracking-tight text-ink dark:text-ink-dark">
+                        C++ console mirror &amp; inspector
+                      </h4>
+                    </div>
+                    <button type="button" onclick="copyCalcConsoleOutput()"
+                      class="px-3 py-1.5 rounded-lg border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark hover:border-emerald-500/50 font-mono text-xs text-ink dark:text-ink-dark transition-colors">
+                      Copy Console Output
+                    </button>
+                  </div>
+
+                  <div
+                    class="rounded-2xl border border-borderLight dark:border-borderDark bg-card dark:bg-card-dark overflow-hidden shadow-sm">
+                    <!-- Top Switcher Bar -->
+                    <div
+                      class="flex flex-wrap items-center justify-between gap-2 px-4 py-3 bg-paper/70 dark:bg-paper-dark/60 border-b border-borderLight dark:border-borderDark">
+                      <div class="flex flex-wrap items-center gap-1.5 font-mono text-xs">
+                        <button type="button" onclick="switchCalcInspectorTab('output')" id="calc-insp-btn-output"
+                          class="px-3 py-1.5 rounded-lg bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 border border-borderLight dark:border-borderDark shadow-xs">Live
+                          Console Output</button>
+                        <button type="button" onclick="switchCalcInspectorTab('formulas')" id="calc-insp-btn-formulas"
+                          class="px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors">Step-by-Step
+                          Formulas</button>
+                        <button type="button" onclick="switchCalcInspectorTab('arch')" id="calc-insp-btn-arch"
+                          class="px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors">.h
+                          / .cpp Architecture</button>
+                      </div>
+                      <span class="font-mono text-[10px] text-muted dark:text-muted-dark uppercase tracking-wider">
+                        Descriptive-Statistics-Calculator
+                      </span>
+                    </div>
+
+                    <!-- Panel Body -->
+                    <div class="p-5 bg-paper dark:bg-paper-dark font-mono text-xs leading-relaxed overflow-x-auto">
+                      <!-- View 1: Live Console Output -->
+                      <pre id="calc-insp-view-output"
+                        class="text-emerald-700 dark:text-emerald-400 whitespace-pre overflow-x-auto tabular-nums"></pre>
+
+                      <!-- View 2: Step-by-Step Math Formulas -->
+                      <div id="calc-insp-view-formulas" class="hidden space-y-4 text-slate-700 dark:text-slate-300"></div>
+
+                      <!-- View 3: Architecture Tree -->
+                      <div id="calc-insp-view-arch" class="hidden text-slate-700 dark:text-slate-300 space-y-1.5">
+                        <div class="text-emerald-600 dark:text-emerald-400 font-bold">Descriptive-Statistics-Calculator/</div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">main.cpp</span> <span
+                            class="text-muted dark:text-muted-dark">// Interactive console loop: (1) Datos individuales, (2)
+                            Cálculo de intervalos, (3) Salir</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">comun.h</span> <span
+                            class="text-muted dark:text-muted-dark">// Shared structs: MedidasDeTendencia, MedidasDeDispersion,
+                            DatosAgrupados</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">comun.cpp</span> <span
+                            class="text-muted dark:text-muted-dark">// Input validation (totalDatos, ingresarDatos),
+                            pedirDecimales, calcularRango, interpretacionCV</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">funciones.h / funciones.cpp</span> <span
+                            class="text-muted dark:text-muted-dark">// Mode 1: Ungrouped individual data statistics, frequency
+                            table &amp; bar chart</span></div>
+                        <div>├── <span class="text-ink dark:text-ink-dark font-semibold">intervalos.h / intervalos.cpp</span>
+                          <span class="text-muted dark:text-muted-dark">// Mode 2: Sturges' rule, class intervals, class marks,
+                            grouped mean/median/mode, variance &amp; ASCII histogram</span>
+                        </div>
+                        <div>└── <span class="text-emerald-600 dark:text-emerald-400 font-semibold">index.html</span> <span
+                            class="text-muted dark:text-muted-dark">// Full reactive web interface using the exact portfolio
+                            editorial color-set</span></div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1105,7 +1200,7 @@
   </section>
 
   <!-- Footer -->
-  <footer
+  <footer id="page-bottom"
     class="border-t border-borderLight dark:border-borderDark py-8 text-center font-mono text-xs text-muted dark:text-muted-dark">
     <div class="max-w-5xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
       <div>© 2026 Alan Ciccarelli · Engineered with C++ spirit & Clean Code.</div>
@@ -1114,6 +1209,16 @@
       </div>
     </div>
   </footer>
+
+  <!-- Scroll to Bottom Floating Arrow -->
+  <a id="scroll-to-bottom" href="#page-bottom" aria-label="Scroll to bottom of page" title="Scroll to bottom"
+    class="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 w-12 h-12 rounded-full flex items-center justify-center bg-ink/10 hover:bg-ink/15 dark:bg-white/10 dark:hover:bg-white/15 text-ink dark:text-slate-200 border border-ink/10 dark:border-white/10 hover:border-emerald-500/40 dark:hover:border-emerald-400/40 backdrop-blur-md shadow-lg transition-all duration-300 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-emerald-500/50 group">
+    <svg class="w-5 h-5 scroll-down-chevron transition-transform duration-300 group-hover:translate-y-0.5" fill="none"
+      stroke="currentColor" stroke-width="2.75" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"
+      aria-hidden="true">
+      <path d="M6.5 9.5L12 15l5.5-5.5"></path>
+    </svg>
+  </a>
 
   <!-- Toast Notification -->
   <div id="toast"
@@ -1301,12 +1406,36 @@
     /* ========================================================
        1. Scroll Progress & Scroll Reveals
        ======================================================== */
-    window.addEventListener('scroll', () => {
+    const scrollToBottomBtn = document.getElementById('scroll-to-bottom');
+
+    function updateScrollUI() {
       const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
       const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      const scrolled = (winScroll / height) * 100;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
       document.getElementById('scroll-progress').style.width = scrolled + '%';
-    });
+
+      if (scrollToBottomBtn) {
+        const distanceToBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+        const atBottom = distanceToBottom <= 120;
+        scrollToBottomBtn.classList.toggle('opacity-0', atBottom);
+        scrollToBottomBtn.classList.toggle('pointer-events-none', atBottom);
+        scrollToBottomBtn.classList.toggle('translate-y-3', atBottom);
+      }
+    }
+
+    if (scrollToBottomBtn) {
+      scrollToBottomBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: 'smooth'
+        });
+      });
+    }
+
+    window.addEventListener('scroll', updateScrollUI, { passive: true });
+    window.addEventListener('resize', updateScrollUI, { passive: true });
+    updateScrollUI();
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1352,7 +1481,14 @@
     ['calc-live-iframe', 'calc-modal-iframe', 'enf-live-iframe', 'enf-modal-iframe'].forEach(id => {
       const frame = document.getElementById(id);
       if (frame) {
-        frame.addEventListener('load', syncCalcIframesTheme);
+        frame.addEventListener('load', () => {
+          syncCalcIframesTheme();
+          if ((id === 'calc-live-iframe' || id === 'calc-modal-iframe') && frame.contentWindow) {
+            try {
+              frame.contentWindow.postMessage({ type: 'calc-inspector-request' }, '*');
+            } catch (e) { /* ignore cross-origin/file restrictions */ }
+          }
+        });
       }
     });
 
@@ -1539,7 +1675,7 @@
         codeContainer.classList.toggle('hidden', view === 'live');
       }
 
-      ['live', 'output', 'tree', 'code'].forEach(v => {
+      ['live', 'output', 'tree', 'code', 'inspector'].forEach(v => {
         const viewEl = document.getElementById(`${prefix}-view-${v}`);
         const btnEl = document.getElementById(`${prefix}-btn-${v}`);
         if (viewEl && btnEl) {
@@ -1556,6 +1692,152 @@
 
       requestAnimationFrame(syncProjectViewportHeight);
     }
+
+    function switchCalcInspectorTab(tab) {
+      ['output', 'formulas', 'arch'].forEach(key => {
+        const view = document.getElementById(`calc-insp-view-${key}`);
+        const btn = document.getElementById(`calc-insp-btn-${key}`);
+        if (!view || !btn) return;
+        if (key === tab) {
+          view.classList.remove('hidden');
+          btn.className = 'px-3 py-1.5 rounded-lg bg-card dark:bg-card-dark font-semibold text-emerald-600 dark:text-emerald-400 border border-borderLight dark:border-borderDark shadow-xs';
+        } else {
+          view.classList.add('hidden');
+          btn.className = 'px-3 py-1.5 rounded-lg text-muted dark:text-muted-dark hover:text-ink dark:hover:text-ink-dark transition-colors';
+        }
+      });
+      requestAnimationFrame(syncProjectViewportHeight);
+    }
+
+    function copyCalcConsoleOutput() {
+      const outputEl = document.getElementById('calc-insp-view-output');
+      if (!outputEl) return;
+      const text = outputEl.textContent || '';
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => showToast('Console output copied!')).catch(() => {
+          const el = document.createElement('textarea');
+          el.value = text;
+          document.body.appendChild(el);
+          el.select();
+          document.execCommand('copy');
+          document.body.removeChild(el);
+          showToast('Console output copied!');
+        });
+      } else {
+        const el = document.createElement('textarea');
+        el.value = text;
+        document.body.appendChild(el);
+        el.select();
+        document.execCommand('copy');
+        document.body.removeChild(el);
+        showToast('Console output copied!');
+      }
+    }
+
+    (function initCalcInspector() {
+      const outputEl = document.getElementById('calc-insp-view-output');
+      const formulasEl = document.getElementById('calc-insp-view-formulas');
+      if (!outputEl || !formulasEl) return;
+
+      // Default Portfolio (N=15) Individual Data output matching Descriptive-Statistics-Calculator-Web
+      const sorted = [12, 15, 15, 18, 20, 22, 22, 22, 25, 30, 31, 35, 40, 42, 45];
+      const n = sorted.length;
+      const min = sorted[0];
+      const max = sorted[n - 1];
+      const range = max - min;
+      const sum = sorted.reduce((acc, v) => acc + v, 0);
+      const mean = sum / n;
+      const median = sorted[(n - 1) / 2];
+      const fmt = (v) => (Math.abs(v) < 1e-12 ? 0 : v).toFixed(2);
+
+      const freqMap = new Map();
+      sorted.forEach(v => freqMap.set(v, (freqMap.get(v) || 0) + 1));
+      const rows = [];
+      let cum = 0;
+      let cumRel = 0;
+      let maxFreq = 0;
+      for (const [val, fi] of freqMap.entries()) {
+        if (fi > maxFreq) maxFreq = fi;
+        cum += fi;
+        const fr = fi / n;
+        cumRel += fr;
+        rows.push({ value: val, fi, fa: cum, fr, frp: fr * 100, fra: cumRel });
+      }
+      const modes = rows.filter(r => r.fi === maxFreq).map(r => r.value);
+      const sumSqDiff = sorted.reduce((acc, v) => acc + Math.pow(v - mean, 2), 0);
+      const varP = sumSqDiff / n;
+      const varM = sumSqDiff / (n - 1);
+      const stdP = Math.sqrt(varP);
+      const stdM = Math.sqrt(varM);
+      const cvP = (stdP / Math.abs(mean)) * 100;
+      const cvM = (stdM / Math.abs(mean)) * 100;
+      const cvDescEs = (cv) => cv < 10
+        ? 'Muy representativo (menor al 10% - baja variabilidad)'
+        : cv < 20
+          ? 'Representativo aceptable (menor al 20% - variabilidad moderada)'
+          : cv < 30
+            ? 'Media poco representativa (menor al 30% - alta variabilidad)'
+            : 'No representativo (variabilidad muy alta)';
+
+      const lines = [
+        '-------------------------DATOS INDIVIDUALES (ORDENADOS)---------------------------',
+        `[+] Dataset (N=${n}): [${sorted.join(', ')}]`,
+        '',
+        '---------------------------TABLA DE FRECUENCIAS------------------------------------',
+        ' valor (xi) | fi | fa | fr | fr% | fra',
+        '',
+        ...rows.map(r => ` ${fmt(r.value).padStart(10)} | ${String(r.fi).padStart(2)} | ${String(r.fa).padStart(2)} | ${fmt(r.fr)} | ${fmt(r.frp)}% | ${fmt(r.fra)}`),
+        '',
+        '----------------------------GRAFICO DE BARRAS--------------------------------------',
+        ...rows.map(r => `${fmt(r.value).padStart(8)} | ${'#'.repeat(r.fi)} [${r.fi}]`),
+        '',
+        '-------------------------MEDIDAS DE TENDENCIA------------------------------------',
+        `Media: ${fmt(mean)}`,
+        `Mediana: ${fmt(median)}`,
+        `Moda: ${modes.map(v => fmt(v)).join(', ')}`,
+        '-------------------------MEDIDAS DE DISPERSION-----------------------------------',
+        `Rango: ${fmt(range)}`,
+        `Varianza Poblacional: ${fmt(varP)}`,
+        `Varianza Muestral: ${fmt(varM)}`,
+        `Desvío Poblacional: ${fmt(stdP)}`,
+        `Desvío Muestral: ${fmt(stdM)}`,
+        `CV poblacional: ${fmt(cvP)}% : ${cvDescEs(cvP)}`,
+        `CV muestral: ${fmt(cvM)}% : ${cvDescEs(cvM)}`,
+        '-----------------------------------------------------------------------------------'
+      ];
+      outputEl.textContent = lines.join('\n');
+
+      formulasEl.innerHTML = `
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+          <div class="p-3.5 rounded-xl bg-card dark:bg-card-dark border border-borderLight dark:border-borderDark">
+            <div class="text-emerald-600 dark:text-emerald-400 font-bold mb-1">1. Arithmetic Mean (x̄)</div>
+            <div>x̄ = (Σxᵢ) / N = ${fmt(sum)} / ${n} = <strong>${fmt(mean)}</strong></div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-card dark:bg-card-dark border border-borderLight dark:border-borderDark">
+            <div class="text-indigo-600 dark:text-indigo-400 font-bold mb-1">2. Median &amp; Range</div>
+            <div>Me = <strong>${fmt(median)}</strong> (from sorted vector of N = ${n})</div>
+            <div>R = max − min = ${fmt(max)} − ${fmt(min)} = <strong>${fmt(range)}</strong></div>
+          </div>
+          <div class="p-3.5 rounded-xl bg-card dark:bg-card-dark border border-borderLight dark:border-borderDark md:col-span-2">
+            <div class="text-amber-600 dark:text-amber-400 font-bold mb-1">3. Dispersion &amp; Coefficient of Variation</div>
+            <div>Σ(xᵢ − x̄)² = ${fmt(sumSqDiff)}</div>
+            <div>σ² = ${fmt(sumSqDiff)} / ${n} = <strong>${fmt(varP)}</strong>  |  σ = <strong>${fmt(stdP)}</strong>  |  CVp = (σ / |x̄|) × 100 = <strong>${fmt(cvP)}%</strong></div>
+            <div>s² = ${fmt(sumSqDiff)} / ${n - 1} = <strong>${fmt(varM)}</strong>  |  s = <strong>${fmt(stdM)}</strong>  |  CVm = (s / |x̄|) × 100 = <strong>${fmt(cvM)}%</strong></div>
+          </div>
+        </div>`;
+
+      // Stay live-synced whenever the embedded calculator iframe computes a new result
+      window.addEventListener('message', (event) => {
+        if (!event.data || event.data.type !== 'calc-inspector-sync') return;
+        if (typeof event.data.consoleOutput === 'string') {
+          outputEl.textContent = event.data.consoleOutput;
+        }
+        if (typeof event.data.formulasHtml === 'string') {
+          formulasEl.innerHTML = event.data.formulasHtml;
+        }
+        requestAnimationFrame(syncProjectViewportHeight);
+      });
+    })();
 
     /* ========================================================
        4. Case Study Drawer & Notes Modal Data
